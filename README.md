@@ -32,7 +32,7 @@ Welcome to the EchoLog repo!
 8. Work the ticket, commit, and push
 9. When ready, make a pull request to merge the ticket's branch into dev.
 10. Add a link to the pull request to the ticket's description. Move the ticket into Review.
-11. If your code passes review, it will be merged into dev. If not, comments will be left in the pull request that highlight issues. Work with the reviewer to implement necessary fixes and push the ticket through.
+11. If your code passes review, it will be merged into dev. If not, comments will be left in the pull request that highlight issues. Work with the reviewer to implement necessary fixes. Any changes pushed to the branch will be included in the open pull request; there is no need to make another.
 12. Congrats! You just completed a ticket! Treat yourself to something sweet and get ready to do it all again 😄
 
 If you have issues with any of the steps above, please reach out to Megan or Ryan help.
