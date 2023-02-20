@@ -1,31 +1,38 @@
 # EchoLog
 
-A new Flutter project.
+Welcome to the EchoLog repo!
 
-## Getting Started
+## How to Turn Tickets Like a Pro
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
+1. Clone this repo
 
-### IMPORTANT:
+    `git clone git@github.com:12yanogden/EchoLog.git`
 
-For projects with Firestore integration, you must first run the following commands to ensure the project compiles:
+2. Checkout dev. All branches will be merged with dev before dev is merged with main
 
-```
-flutter pub get
-flutter packages pub run build_runner build --delete-conflicting-outputs
-```
+    `git checkout dev`
 
-This command creates the generated files that parse each Record from Firestore into a schema object.
+3. Get a ticket. Message Ryan if you don't have a ticket assigned to you.
+4. Create a branch on GitHub
+   
+   If the ticket is something like "Add colors", the branch should have a name that matches such as "add-colors".
 
-### Getting started continued:
+   Creating the branch on GitHub first instead of locally will solve any upstream issues.
 
-This project is a starting point for a Flutter application.
+5. Add a link to the branch to the ticket's description. This will inform everyone else on the team what you're working on.
 
-A few resources to get you started if this is your first Flutter project:
+6. Fetch the branch
+   
+   `git fetch`
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+7. Checkout the branch
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    `git checkout [branch_name]`
+
+8. Work the ticket, commit, and push
+9. When ready, make a pull request to merge the ticket's branch into dev.
+10. Add a link to the pull request to the ticket's description. Move the ticket into Review.
+11. If your code passes review, it will be merged into dev. If not, comments will be left in the pull request that highlight issues. Work with the reviewer to implement necessary fixes. Any changes pushed to the branch will be included in the open pull request; there is no need to make another.
+12. Congrats! You just completed a ticket! Treat yourself to something sweet and get ready to do it all again 😄
+
+If you have issues with any of the steps above, please reach out to Megan or Ryan help.
