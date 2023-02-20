@@ -1,7 +1,8 @@
+import 'package:echo_log/components/theme_colors.dart';
+
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
 import '../components/emot_sliders.dart';
-import '../components/theme_colors.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -9,7 +10,6 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
-
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -19,28 +19,28 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  Color bgColor = Colors.white;
-  double thumbRadious = 20.0; // for sliders
+  Color bgColor = ThemeColors.primaryBg;
 
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
       width: 100, height: 100, fit: BoxFit.cover);
-  Image checkMarkHighlight = Image.asset(
-      'assets/images/checkmark_highlight.png',
-      width: 200,
-      height: 200,
-      fit: BoxFit.cover);
-  bool toggleCheck = true;
 
   int timerMilliseconds = 0;
-  List<double> _emotionValues = List.filled(5, 0.0);
-  List<String> emojis = List.filled(5, "😃");
-  List<String> emojiNames = List.filled(5, "emotName");
-  List<Color> emojiColors = List.filled(5, Colors.red);
-  late EmotSliders sliders;
-
-  int showForm = 1;
   String timerValue = StopWatchTimer.getDisplayTime(0, milliSecond: false);
   StopWatchTimer timerController = StopWatchTimer(mode: StopWatchMode.countUp);
+  late EmotSliders sliders;
+  int showForm = 0;
+  List<double> _emotionValues = List.filled(5, 0.0);
+  //---------Start Temp Values (replace with info from settings page)
+  List<String> emojis = ["💕", "🖖", "👼", "🚣‍♀️", "🐛"];
+  List<String> emojiNames = List.filled(5, "emotName");
+  List<Color> emojiColors = [
+    Colors.red,
+    Colors.purple,
+    Colors.brown,
+    Colors.blue,
+    Colors.green
+  ];
+  //---------End Temp Values
 
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -54,7 +54,6 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void dispose() {
-
     _unfocusNode.dispose();
     timerController.dispose();
     super.dispose();
@@ -63,7 +62,12 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-    this.sliders = EmotSliders(emotionValues: _emotionValues, emojis: emojis, emojiNames: emojiNames, emojiColors: emojiColors,);
+    this.sliders = EmotSliders(
+      emotionValues: _emotionValues,
+      emojis: emojis,
+      emojiNames: emojiNames,
+      emojiColors: emojiColors,
+    );
 
     return Scaffold(
       key: scaffoldKey,
@@ -79,7 +83,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             index: showForm,
             children: <Widget>[
               _MainRecordColumn(),
-              _NewEntryForm(),
+              _EmotionLog(),
             ],
           ),
         ),
@@ -150,8 +154,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   width: 36,
                                   height: 36,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: bgColor //FlutterFlowTheme.of(context).secondaryBackground,
                                   ),
                                   child: Image.asset(
                                     'assets/images/big_mic.png',
@@ -172,8 +175,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   width: 36,
                                   height: 36,
                                   decoration: BoxDecoration(
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: bgColor //FlutterFlowTheme.of(context).secondaryBackground,
                                   ),
                                   child: Image.asset(
                                     'assets/images/pause.png',
@@ -196,15 +198,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 timerController.onExecute
                                     .add(StopWatchExecute.reset);
 
-                                // Change to new entry form
+                                // Change to emotion log form
                                 showForm = 1;
+                                // set slider values to 0 incase the user makes more then one entry in a row
+                                for (int i = 0;
+                                    i < _emotionValues.length;
+                                    i++) {
+                                  _emotionValues[i] = 0;
+                                }
                               },
                               child: Container(
                                 width: 36,
                                 height: 36,
                                 decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  color: bgColor, //FlutterFlowTheme.of(context).secondaryBackground,
                                 ),
                                 child: Image.asset(
                                   'assets/images/stop.png',
@@ -251,9 +258,10 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
-  Container _NewEntryForm() {
+  Container _EmotionLog() {
     double mainMargins = 10.0;
-    
+    double buttonRadious = 100;
+
     return Container(
       margin: EdgeInsetsDirectional.all(mainMargins),
       child: Column(children: [
@@ -266,26 +274,25 @@ class _HomeWidgetState extends State<HomeWidget> {
             textScaleFactor: 2,
           ),
         ),
-        this.sliders, // The sliders
-        Expanded( // Just using this to space between sliders and check mark
-            child:
-                Container() 
-            ),
         Container(
-            width: 100,
-            height: 100,
-            margin: EdgeInsets.only(bottom: 20),
-            child: IconButton(
-              icon: toggleCheck ? checkMarkBlack : checkMarkHighlight,
-              onPressed: () {
-                setState(() {
-                  toggleCheck = !toggleCheck;
-                });
-              },
-            )
-          )
+          margin: EdgeInsets.all(mainMargins),
+          child: this.sliders, // The sliders
+        ),
+        Expanded(
+            child: Center(
+                child: Container(
+                    width: buttonRadious,
+                    height: buttonRadious,
+                    margin: EdgeInsets.only(top: mainMargins),
+                    child: IconButton(
+                      icon: checkMarkBlack,
+                      onPressed: () {
+                        setState(() {
+                          showForm = 0; // Eventually progress to next page in enrty form
+                        });
+                      },
+                    )))),
       ]),
     );
   }
-
 }
