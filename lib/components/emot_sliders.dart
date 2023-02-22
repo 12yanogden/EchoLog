@@ -23,6 +23,15 @@ class EmotSliders extends StatefulWidget {
   @override
   _EmotSliderState createState() => _EmotSliderState(
       emotionValues, emojis, emojiNames, emojiColors, isEnabled);
+
+  List<double> getEmotValuesCopy() {
+    List<double> copy = [];
+    for(double value in emotionValues) {
+      copy.add(value);
+    }
+
+    return copy;
+  }
 }
 
 class _EmotSliderState extends State<EmotSliders> {
