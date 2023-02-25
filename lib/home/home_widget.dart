@@ -1,4 +1,11 @@
+import 'dart:async';
+import 'dart:core';
+import 'dart:io';
+import 'dart:ui' as ui;
+
 import 'package:echo_log/components/theme_colors.dart';
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
@@ -9,7 +16,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui' as ui;
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({Key? key}) : super(key: key);
@@ -19,6 +25,8 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  final recorder = FlutterSoundRecorder();
+  DateTime now = DateTime.now();
   Color bgColor = ThemeColors.primaryBg;
 
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
@@ -49,6 +57,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   void initState() {
     super.initState();
 
+    initRecorder();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
@@ -56,7 +65,34 @@ class _HomeWidgetState extends State<HomeWidget> {
   void dispose() {
     _unfocusNode.dispose();
     timerController.dispose();
+    recorder.closeRecorder();
     super.dispose();
+  }
+
+  Future<void> initRecorder() async {
+    final status = await Permission.microphone.request();
+
+    if (status != PermissionStatus.granted) {
+      throw "Microphone permission not granted";
+    }
+
+    await recorder.openRecorder();
+  }
+
+  Future<void> startRecording() async {
+    String recordingName = "${now.year}.${now.month}.${now.day}";
+    String recordingPath = 'assets/recordings/$recordingName';
+
+    if (!File(recordingPath).existsSync()) {
+      await recorder.startRecorder(toFile: recordingPath);
+    }
+  }
+
+  Future<void> stopRecording() async {
+    final path = await recorder.stopRecorder();
+    final recordingFile = File(path!);
+
+    print("Recording file: $recordingFile");
   }
 
   @override
@@ -105,7 +141,7 @@ class _HomeWidgetState extends State<HomeWidget> {
               alignment: AlignmentDirectional(0, 0),
               children: [
                 Image.asset(
-                  'assets/images/orange_circles.webp',
+                  'assets/images/home_circle.png',
                   width: 320,
                   fit: BoxFit.cover,
                 ),
@@ -121,6 +157,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             timerController.onExecute
                                 .add(StopWatchExecute.start);
                             FFAppState().micState = 'RECORDING';
+                            await startRecording();
                           },
                           child: Image.asset(
                             'assets/images/big_mic.png',
@@ -154,8 +191,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   width: 36,
                                   height: 36,
                                   decoration: BoxDecoration(
-                                    color: bgColor //FlutterFlowTheme.of(context).secondaryBackground,
-                                  ),
+                                      color:
+                                          bgColor //FlutterFlowTheme.of(context).secondaryBackground,
+                                      ),
                                   child: Image.asset(
                                     'assets/images/big_mic.png',
                                     width: 100,
@@ -175,8 +213,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                                   width: 36,
                                   height: 36,
                                   decoration: BoxDecoration(
-                                    color: bgColor //FlutterFlowTheme.of(context).secondaryBackground,
-                                  ),
+                                      color:
+                                          bgColor //FlutterFlowTheme.of(context).secondaryBackground,
+                                      ),
                                   child: Image.asset(
                                     'assets/images/pause.png',
                                     width: 100,
@@ -192,6 +231,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             InkWell(
                               onTap: () async {
                                 // stop timer
+                                await stopRecording();
                                 timerController.onExecute
                                     .add(StopWatchExecute.stop);
                                 FFAppState().micState = 'NOT_RECORDING';
@@ -211,7 +251,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 width: 36,
                                 height: 36,
                                 decoration: BoxDecoration(
-                                  color: bgColor, //FlutterFlowTheme.of(context).secondaryBackground,
+                                  color:
+                                      bgColor, //FlutterFlowTheme.of(context).secondaryBackground,
                                 ),
                                 child: Image.asset(
                                   'assets/images/stop.png',
@@ -288,7 +329,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                       icon: checkMarkBlack,
                       onPressed: () {
                         setState(() {
-                          showForm = 0; // Eventually progress to next page in enrty form
+                          showForm =
+                              0; // Eventually progress to next page in enrty form
                         });
                       },
                     )))),
