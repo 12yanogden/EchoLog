@@ -17,7 +17,7 @@ class EntryService {
       EmotionRating(3, 4),
       EmotionRating(4, 5)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 1)),
+    Entry(DateTime.now().subtract(Duration(days: 2)),
         "../assets/fakeDataRecording.mp4", [
       EmotionRating(0, 5),
       EmotionRating(1, 4),
@@ -25,7 +25,7 @@ class EntryService {
       EmotionRating(3, 2),
       EmotionRating(4, 1)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 1)),
+    Entry(DateTime.now().subtract(Duration(days: 3)),
         "../assets/fakeDataRecording.mp4", [
       EmotionRating(0, 1),
       EmotionRating(1, 2),
@@ -33,7 +33,7 @@ class EntryService {
       EmotionRating(3, 4),
       EmotionRating(4, 5)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 1)),
+    Entry(DateTime.now().subtract(Duration(days: 4)),
         "../assets/fakeDataRecording.mp4", [
       EmotionRating(0, 5),
       EmotionRating(1, 4),
@@ -41,7 +41,7 @@ class EntryService {
       EmotionRating(3, 2),
       EmotionRating(4, 1)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 1)),
+    Entry(DateTime.now().subtract(Duration(days: 5)),
         "../assets/fakeDataRecording.mp4", [
       EmotionRating(0, 1),
       EmotionRating(1, 2),
