@@ -10,40 +10,40 @@ class EntryService {
 
   List<Entry> entries = [
     Entry(DateTime.now().subtract(Duration(days: 1)), "", [
-      EmotionRating(Emotion("😡", "angry", Colors.red, 0), 0),
-      EmotionRating(Emotion("😭", "sad", Colors.blue, 1), 1),
-      EmotionRating(Emotion("🥱", "tired", Colors.purple, 2), 2),
-      EmotionRating(Emotion("😖", "stressed", Colors.yellow, 3), 3),
-      EmotionRating(Emotion("😄", "happy", Colors.green, 4), 4)
+      EmotionRating(0, 1),
+      EmotionRating(1, 2),
+      EmotionRating(2, 3),
+      EmotionRating(3, 4),
+      EmotionRating(4, 5)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 2)), "", [
-      EmotionRating(Emotion("😡", "angry", Colors.red, 0), 4),
-      EmotionRating(Emotion("😭", "sad", Colors.blue, 1), 3),
-      EmotionRating(Emotion("🥱", "tired", Colors.purple, 2), 2),
-      EmotionRating(Emotion("😖", "stressed", Colors.yellow, 3), 1),
-      EmotionRating(Emotion("😄", "happy", Colors.green, 4), 0)
+    Entry(DateTime.now().subtract(Duration(days: 1)), "", [
+      EmotionRating(0, 5),
+      EmotionRating(1, 4),
+      EmotionRating(2, 3),
+      EmotionRating(3, 2),
+      EmotionRating(4, 1)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 3)), "", [
-      EmotionRating(Emotion("😡", "angry", Colors.red, 0), 0),
-      EmotionRating(Emotion("😭", "sad", Colors.blue, 1), 1),
-      EmotionRating(Emotion("🥱", "tired", Colors.purple, 2), 2),
-      EmotionRating(Emotion("😖", "stressed", Colors.yellow, 3), 3),
-      EmotionRating(Emotion("😄", "happy", Colors.green, 4), 4)
+    Entry(DateTime.now().subtract(Duration(days: 1)), "", [
+      EmotionRating(0, 1),
+      EmotionRating(1, 2),
+      EmotionRating(2, 3),
+      EmotionRating(3, 4),
+      EmotionRating(4, 5)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 4)), "", [
-      EmotionRating(Emotion("😡", "angry", Colors.red, 0), 4),
-      EmotionRating(Emotion("😭", "sad", Colors.blue, 1), 3),
-      EmotionRating(Emotion("🥱", "tired", Colors.purple, 2), 2),
-      EmotionRating(Emotion("😖", "stressed", Colors.yellow, 3), 1),
-      EmotionRating(Emotion("😄", "happy", Colors.green, 4), 0)
+    Entry(DateTime.now().subtract(Duration(days: 1)), "", [
+      EmotionRating(0, 5),
+      EmotionRating(1, 4),
+      EmotionRating(2, 3),
+      EmotionRating(3, 2),
+      EmotionRating(4, 1)
     ]),
-    Entry(DateTime.now().subtract(Duration(days: 5)), "", [
-      EmotionRating(Emotion("😡", "angry", Colors.red, 0), 0),
-      EmotionRating(Emotion("😭", "sad", Colors.blue, 1), 1),
-      EmotionRating(Emotion("🥱", "tired", Colors.purple, 2), 2),
-      EmotionRating(Emotion("😖", "stressed", Colors.yellow, 3), 3),
-      EmotionRating(Emotion("😄", "happy", Colors.green, 4), 4)
-    ])
+    Entry(DateTime.now().subtract(Duration(days: 1)), "", [
+      EmotionRating(0, 1),
+      EmotionRating(1, 2),
+      EmotionRating(2, 3),
+      EmotionRating(3, 4),
+      EmotionRating(4, 5)
+    ]),
   ];
 
   EntryService._internal();
