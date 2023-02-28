@@ -1,7 +1,4 @@
-import 'dart:async';
 import 'dart:core';
-import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:echo_log/components/theme_colors.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -16,16 +13,24 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
+
 
 class HomeWidget extends StatefulWidget {
-  const HomeWidget({Key? key}) : super(key: key);
+  HomeWidget({Key? key}) : super(key: key);
+  _HomeWidgetState homeWidgetState = _HomeWidgetState();
 
   @override
-  _HomeWidgetState createState() => _HomeWidgetState();
+  _HomeWidgetState createState() => homeWidgetState;
+  String getRecordingPath() {
+    return homeWidgetState.getRecordingPath();
+  }
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
   final recorder = FlutterSoundRecorder();
+  final player = FlutterSoundPlayer();
   DateTime now = DateTime.now();
   Color bgColor = ThemeColors.primaryBg;
 
@@ -53,6 +58,12 @@ class _HomeWidgetState extends State<HomeWidget> {
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late String recordingPath;
+
+  String getRecordingPath() {
+    return this.recordingPath;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -66,6 +77,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     _unfocusNode.dispose();
     timerController.dispose();
     recorder.closeRecorder();
+    player.closePlayer();
     super.dispose();
   }
 
@@ -77,22 +89,22 @@ class _HomeWidgetState extends State<HomeWidget> {
     }
 
     await recorder.openRecorder();
+    await player.openPlayer();
   }
 
   Future<void> startRecording() async {
-    String recordingName = "${now.year}.${now.month}.${now.day}";
-    String recordingPath = 'assets/recordings/$recordingName';
-
-    if (!File(recordingPath).existsSync()) {
-      await recorder.startRecorder(toFile: recordingPath);
-    }
+    var tempDir = await getTemporaryDirectory();
+    var recordingPath = "${tempDir.path}/${now.millisecondsSinceEpoch}.mp4";
+    await recorder.startRecorder(toFile: recordingPath, codec:Codec.aacMP4, audioSource: AudioSource.microphone);
   }
 
   Future<void> stopRecording() async {
-    final path = await recorder.stopRecorder();
-    final recordingFile = File(path!);
-
-    print("Recording file: $recordingFile");
+    try {
+      this.recordingPath = (await recorder.stopRecorder())!;
+    }
+    catch (e) {
+      print(e);
+    }
   }
 
   @override
