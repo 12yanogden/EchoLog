@@ -3,22 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 import './theme_colors.dart';
+import '../backend/emotion_service.dart';
+import '../models/emotion.dart';
 
 class EmotSliders extends StatefulWidget {
-  late List<double> emotionValues;
-  late final List<String> emojis;
-  late final List<String> emojiNames;
-  late final List<Color> emojiColors;
+  late final List<double> emotionValues;
+  late final List<String> emojis = [];
+  late final List<String> emojiNames = [];
+  late final List<Color> emojiColors = [];
+  late final List<Emotion> emotions;
   final bool isEnabled; // can the sliders move
 
   EmotSliders(
       {Key? key,
       required this.emotionValues,
-      required this.emojis,
-      required this.emojiNames,
-      required this.emojiColors,
+      required this.emotions,
       this.isEnabled = true})
-      : super(key: key);
+      : super(key: key) {
+        this.emotions.forEach((emot) {
+          this.emojis.add(emot.emoji);
+          this.emojiNames.add(emot.name);
+          this.emojiColors.add(emot.color);
+        });
+      }
 
   @override
   _EmotSliderState createState() => _EmotSliderState(

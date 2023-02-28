@@ -33,7 +33,7 @@ class EmotionService {
   
 
 
-  List<Emotion> getCurEmotion(){
+  List<Emotion> getCurEmotions(){
     return cur_emotions;
   }
 
@@ -43,12 +43,17 @@ class EmotionService {
     this.cur_emotions.add(emotion);
   }
 
-  removeCurEmotionByIndex(int index){
-    cur_emotions.removeAt(index);
+  removeCurEmotionByID(int id){
+    Emotion emot = cur_emotions.firstWhere((emot) => emot.id == id);
+    cur_emotions.remove(emot);
   }
 
   Emotion getEmotionByID(int id) {
     return all_emotions.firstWhere((emot) => emot.id == id);
+  }
+
+  int getCurEmotionLimit() {
+    return 5;
   }
 }
 
