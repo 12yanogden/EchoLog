@@ -27,8 +27,14 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
   void initState() {
     super.initState();
     emotionNameController = TextEditingController(
-      text: widget.emotion.name // getJsonField(widget.emotion, r'''$.name''',).toString().toString()
+      text: widget.emotion.name
     );
+  }
+
+  TextEditingController? updateTextController() {
+    //emotionNameController.text(widget.emotion.name)
+    emotionNameController!.value = emotionNameController!.value.copyWith(text: widget.emotion.name);
+    return emotionNameController;
   }
 
   @override
@@ -55,17 +61,6 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
                 fontSize: 32.0,
               )
             ),
-            /*
-            Image.network(
-              getJsonField(
-                widget.emotion,
-                r'''$.icon''',
-              ),
-              width: 32,
-              height: 32,
-              fit: BoxFit.cover,
-            ),
-            */
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 22, 0),
@@ -73,7 +68,7 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: widget.emotion.color,   // colorFromCssString( getJsonField( widget.emotion, r'''$.color''',).toString(), defaultColor: FlutterFlowTheme.of(context).primaryColor,),
+                color: widget.emotion.color,   
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -83,7 +78,7 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 22, 0),
               child: TextFormField(
                 readOnly: true, // This makes it uneditable - remove if adding functionality of editing names
-                controller: emotionNameController,
+                controller: updateTextController(),
                 obscureText: false,
                 decoration: InputDecoration(
                   hintText: 'Emotion Name',
@@ -137,7 +132,6 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
             onTap: () async {
               FFAppState().update(() {
                 EmotionService().removeCurEmotionByID(widget.emotion.id);
-                //FFAppState().removeFromEmotions(widget.emotion!);
               });
             },
             child: Icon(
