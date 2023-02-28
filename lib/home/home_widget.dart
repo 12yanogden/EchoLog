@@ -17,7 +17,6 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 
-
 class HomeWidget extends StatefulWidget {
   HomeWidget({Key? key}) : super(key: key);
   _HomeWidgetState homeWidgetState = _HomeWidgetState();
@@ -85,14 +84,16 @@ class _HomeWidgetState extends State<HomeWidget> {
   Future<void> startRecording() async {
     var tempDir = await getTemporaryDirectory();
     var recordingPath = "${tempDir.path}/${now.millisecondsSinceEpoch}.mp4";
-    await recorder.startRecorder(toFile: recordingPath, codec:Codec.aacMP4, audioSource: AudioSource.microphone);
+    await recorder.startRecorder(
+        toFile: recordingPath,
+        codec: Codec.aacMP4,
+        audioSource: AudioSource.microphone);
   }
 
   Future<void> stopRecording() async {
     try {
       this.recordingPath = (await recorder.stopRecorder())!;
-    }
-    catch (e) {
+    } catch (e) {
       print(e);
     }
   }
