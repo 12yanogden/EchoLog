@@ -7,6 +7,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
 import '../components/emot_sliders.dart';
+import '../backend/emotion_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -43,17 +44,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   late EmotSliders sliders;
   int showForm = 0;
   List<double> _emotionValues = List.filled(5, 0.0);
-  //---------Start Temp Values (replace with info from settings page)
-  List<String> emojis = ["💕", "🖖", "👼", "🚣‍♀️", "🐛"];
-  List<String> emojiNames = List.filled(5, "emotName");
-  List<Color> emojiColors = [
-    Colors.red,
-    Colors.purple,
-    Colors.brown,
-    Colors.blue,
-    Colors.green
-  ];
-  //---------End Temp Values
 
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -112,9 +102,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     context.watch<FFAppState>();
     this.sliders = EmotSliders(
       emotionValues: _emotionValues,
-      emojis: emojis,
-      emojiNames: emojiNames,
-      emojiColors: emojiColors,
+      emotions: EmotionService().getCurEmotions(),
     );
 
     return Scaffold(

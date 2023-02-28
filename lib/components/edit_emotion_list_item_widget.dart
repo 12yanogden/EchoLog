@@ -1,16 +1,19 @@
+import 'package:echo_log/backend/emotion_service.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import '../models/emotion.dart';
 
 class EditEmotionListItemWidget extends StatefulWidget {
   const EditEmotionListItemWidget({
     Key? key,
-    this.emotion,
+    required this.emotion,
   }) : super(key: key);
 
-  final dynamic emotion;
+  final Emotion emotion;
 
   @override
   _EditEmotionListItemWidgetState createState() =>
@@ -24,10 +27,8 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
   void initState() {
     super.initState();
     emotionNameController = TextEditingController(
-        text: getJsonField(
-      widget.emotion,
-      r'''$.name''',
-    ).toString().toString());
+      text: widget.emotion.name // getJsonField(widget.emotion, r'''$.name''',).toString().toString()
+    );
   }
 
   @override
@@ -47,7 +48,15 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
         children: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 11, 0),
-            child: Image.network(
+            child: Text( 
+              widget.emotion.emoji, 
+              textAlign: TextAlign.center, 
+              style: TextStyle(
+                fontSize: 32.0,
+              )
+            ),
+            /*
+            Image.network(
               getJsonField(
                 widget.emotion,
                 r'''$.icon''',
@@ -56,6 +65,7 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
               height: 32,
               fit: BoxFit.cover,
             ),
+            */
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 22, 0),
@@ -63,13 +73,7 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: colorFromCssString(
-                  getJsonField(
-                    widget.emotion,
-                    r'''$.color''',
-                  ).toString(),
-                  defaultColor: FlutterFlowTheme.of(context).primaryColor,
-                ),
+                color: widget.emotion.color,   // colorFromCssString( getJsonField( widget.emotion, r'''$.color''',).toString(), defaultColor: FlutterFlowTheme.of(context).primaryColor,),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -78,6 +82,7 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 22, 0),
               child: TextFormField(
+                readOnly: true, // This makes it uneditable - remove if adding functionality of editing names
                 controller: emotionNameController,
                 obscureText: false,
                 decoration: InputDecoration(
@@ -131,7 +136,8 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
           InkWell(
             onTap: () async {
               FFAppState().update(() {
-                FFAppState().removeFromEmotions(widget.emotion!);
+                EmotionService().removeCurEmotionByID(widget.emotion.id);
+                //FFAppState().removeFromEmotions(widget.emotion!);
               });
             },
             child: Icon(
