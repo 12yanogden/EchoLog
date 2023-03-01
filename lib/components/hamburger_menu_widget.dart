@@ -37,6 +37,7 @@ class _HamburgerMenuWidgetState extends State<HamburgerMenuWidget> {
             context.pushNamed('Home');
           },
           child: Container(
+            margin: EdgeInsets.only(top: 24.0), // added margin because on android the time overlay make it impossible to click
             decoration: BoxDecoration(),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),
