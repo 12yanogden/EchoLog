@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:echo_log/components/theme_colors.dart';
+import 'package:echo_log/models/emotion.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -8,6 +9,9 @@ import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
 import '../components/emot_sliders.dart';
 import '../backend/emotion_service.dart';
+import '../backend/entry_service.dart';
+import '../models/emotion_rating.dart';
+import '../models/entry.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -47,7 +51,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late String recordingPath;
+  String recordingPath = "";
 
   String getRecordingPath() {
     return this.recordingPath;
@@ -239,8 +243,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 timerController.onExecute
                                     .add(StopWatchExecute.reset);
 
-                                // Change to emotion log form
-                                showForm = 1;
+                                // Change to emotion log form if there are current emotions
+                                if (EmotionService().getCurEmotions().length == 0 ) {
+                                  _CreatNewEntry();
+                                } else {
+                                  showForm = 1;
+                                }
                                 // set slider values to 0 incase the user makes more then one entry in a row
                                 for (int i = 0;
                                     i < _emotionValues.length;
@@ -312,7 +320,8 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: Text(
             'How did you feel?',
             textAlign: TextAlign.center,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(
+                fontWeight: FontWeight.bold, color: Colors.black),
             textScaleFactor: 2,
           ),
         ),
@@ -330,12 +339,34 @@ class _HomeWidgetState extends State<HomeWidget> {
                       icon: checkMarkBlack,
                       onPressed: () {
                         setState(() {
-                          showForm =
-                              0; // Eventually progress to next page in enrty form
+                          showForm = 0;
                         });
+                        _CreatNewEntry();
                       },
                     )))),
       ]),
     );
+  }
+
+  _CreatNewEntry() {
+    List<EmotionRating> ratings = [];
+    List<Emotion> curEmots = EmotionService().getCurEmotions();
+    for (int i = 0; i < curEmots.length; i++) {
+      ratings
+          .add(EmotionRating(curEmots[i].id, this._emotionValues[i].toInt()));
+    }
+
+    Entry newEntry = Entry(DateTime.now(), this.recordingPath, ratings);
+    EntryService().addEntry(newEntry);
+  }
+
+  // For testing
+  _PlayRecording() async {
+    await player.startPlayer(
+        fromURI: this.recordingPath,
+        codec: Codec.aacMP4,
+        whenFinished: () async {
+          await player.stopPlayer();
+        });
   }
 }
