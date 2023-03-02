@@ -45,7 +45,8 @@ class _PlayButtonState extends State<PlayButton> {
             await player.stopPlayer();
           });
     } catch (e) {
-      print("Terminated by error!");
+      print("Could not play recording!");
+      print("recordingPath: ${this.recordingPath}");
       print(e);
     }
   }
