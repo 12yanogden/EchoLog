@@ -33,16 +33,16 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             ),
           ),
         ),
-        Container(
-          width: 68,
-          height: 68,
-          decoration: BoxDecoration(),
-          child: Icon(
-            Icons.search_rounded,
-            color: Colors.black,
-            size: 24,
-          ),
-        ),
+        // Container(
+        //   width: 68,
+        //   height: 68,
+        //   decoration: BoxDecoration(),
+        //   child: Icon(
+        //     Icons.search_rounded,
+        //     color: Colors.black,
+        //     size: 24,
+        //   ),
+        // ),
       ],
     );
   }
