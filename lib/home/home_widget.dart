@@ -142,7 +142,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         TopBarWidget(),
         PlayButton(
             recordingPath:
-                "/Users/ryan/BYU/EchoLog/EchoLog/assets/recordings/fakeDataRecording.mp4"),
+                "/data/user/0/com.mycompany.echolog/cache/1677789957252.mp4"),
         Expanded(
           child: Align(
             alignment: AlignmentDirectional(0, -0.1),
