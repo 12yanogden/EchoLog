@@ -12,7 +12,7 @@ class EntryService {
     Entry(DateTime.now().subtract(Duration(days: 1)),
         "../assets/fakeDataRecording.mp4", [
       EmotionRating(0, 1),
-      EmotionRating(1, 2),
+      EmotionRating(1, 3),
       EmotionRating(2, 3),
       EmotionRating(3, 4),
       EmotionRating(4, 5)
