@@ -1,9 +1,6 @@
 import 'package:echo_log/models/emotion_rating.dart';
 import 'package:echo_log/models/entry.dart';
 
-import '../models/emotion.dart';
-import 'package:flutter/material.dart';
-
 class EntryService {
   // Singleton Pattern----------------
   static final EntryService _instance = EntryService._internal();

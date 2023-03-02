@@ -6,14 +6,15 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../components/hamburger_menu_widget.dart';
+import '../components/play_button.dart';
 import '../components/top_bar_widget.dart';
 import '../components/emot_sliders.dart';
 import '../backend/emotion_service.dart';
 import '../backend/entry_service.dart';
-import '../models/emotion_rating.dart';
-import '../models/entry.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';
+import '../models/emotion_rating.dart';
+import '../models/entry.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
@@ -139,6 +140,9 @@ class _HomeWidgetState extends State<HomeWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         TopBarWidget(),
+        PlayButton(
+            recordingPath:
+                "/Users/ryan/BYU/EchoLog/EchoLog/assets/recordings/fakeDataRecording.mp4"),
         Expanded(
           child: Align(
             alignment: AlignmentDirectional(0, -0.1),
@@ -244,7 +248,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                                     .add(StopWatchExecute.reset);
 
                                 // Change to emotion log form if there are current emotions
-                                if (EmotionService().getCurEmotions().length == 0 ) {
+                                if (EmotionService().getCurEmotions().length ==
+                                    0) {
                                   _CreatNewEntry();
                                 } else {
                                   showForm = 1;
