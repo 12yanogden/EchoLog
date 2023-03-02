@@ -1,6 +1,7 @@
 import 'package:echo_log/backend/entry_service.dart';
 
 import '../components/hamburger_menu_widget.dart';
+import '../components/theme_colors.dart';
 import '../components/top_bar_widget.dart';
 import '../components/entry_graph.dart';
 
@@ -11,6 +12,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
+import 'package:fl_chart/fl_chart.dart';
+import '../components/date_stamp.dart';
 
 class TrendsWidget extends StatefulWidget {
   const TrendsWidget({Key? key}) : super(key: key);
@@ -69,7 +72,7 @@ class _TrendsWidgetState extends State<TrendsWidget>
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: ThemeColors.primaryBg, //FlutterFlowTheme.of(context).primaryBackground,
       drawer: Drawer(
         elevation: 16,
         child: HamburgerMenuWidget(),
@@ -111,8 +114,7 @@ class _TrendsWidgetState extends State<TrendsWidget>
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
+                                color: ThemeColors.primaryBg, //FlutterFlowTheme.of(context).primaryBackground,
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 4,
@@ -139,8 +141,7 @@ class _TrendsWidgetState extends State<TrendsWidget>
                                     ),
                                     Text(
                                       'Select Date',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
+                                      style: TextStyle(color: Colors.black) //FlutterFlowTheme.of(context).bodyText1,
                                     ),
                                   ],
                                 ),
@@ -153,33 +154,36 @@ class _TrendsWidgetState extends State<TrendsWidget>
                   ),
 
                   // Graph Area--------------------------------------------
-                  Expanded(
-                      child: Center(
-                          child: Container(
-                    alignment: Alignment.center,
-                    height: MediaQuery.of(context).size.height / 1.7,
-                    child:
-                        ListView(scrollDirection: Axis.horizontal, children: <
-                            Widget>[
-                      for (int i = 0; i < EntryService().entries.length; i++)
-                        Container(
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Color(0xFFF5D7AB),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(20))),
-                            child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text("Date Here",
-                                      style: TextStyle(color: Colors.black)),
-                                  EntryGraph(EntryService().entries[i].ratings),
-                                  Text("Play Button here",
-                                      style: TextStyle(color: Colors.black)),
-                                ])),
-                    ]),
-                  )))
+                    
+                    Expanded (child: Center(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.height / 1.7,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+
+                            children: <Widget>[
+                              for (int i = 0; i < EntryService().entries.length; i++)
+                                Wrap(
+                                children: [Container (
+                                  //margin: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration( 
+                                    border: Border(left: BorderSide(color: Colors.grey,)),
+                                    ),
+                                  width: 140,
+                                  padding: EdgeInsets.all(10),
+                                  
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      DateStamp(date: EntryService().entries[i].date),
+                                      EntryGraph(EntryService().entries[i].ratings),
+                                      Text("Play Button here", style: TextStyle(color: Colors.black)),
+                                    ]))]),
+                            ]),
+                    )
+                  ))
                   //
                 ],
               ),
@@ -241,7 +245,7 @@ class _TrendsWidgetState extends State<TrendsWidget>
                       ),
                     ),
                     child: FlutterFlowCalendar(
-                      color: FlutterFlowTheme.of(context).primaryColor,
+                      color: ThemeColors.primaryBg, // FlutterFlowTheme.of(context).primaryColor,
                       weekFormat: false,
                       weekStartsMonday: false,
                       initialDate: FFAppState().today,
