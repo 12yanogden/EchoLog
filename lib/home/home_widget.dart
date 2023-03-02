@@ -140,9 +140,6 @@ class _HomeWidgetState extends State<HomeWidget> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         TopBarWidget(),
-        PlayButton(
-            recordingPath:
-                "/data/user/0/com.mycompany.echolog/cache/1677789957252.mp4"),
         Expanded(
           child: Align(
             alignment: AlignmentDirectional(0, -0.1),
