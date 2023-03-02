@@ -37,12 +37,17 @@ class _PlayButtonState extends State<PlayButton> {
   }
 
   _playRecording() async {
-    await player.startPlayer(
-        fromURI: this.recordingPath,
-        codec: Codec.aacMP4,
-        whenFinished: () async {
-          await player.stopPlayer();
-        });
+    try {
+      await player.startPlayer(
+          fromURI: this.recordingPath,
+          codec: Codec.aacMP4,
+          whenFinished: () async {
+            await player.stopPlayer();
+          });
+    } catch (e) {
+      print("Terminated by error!");
+      print(e);
+    }
   }
 
   @override
