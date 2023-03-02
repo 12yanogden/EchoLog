@@ -1,5 +1,3 @@
-import 'package:echo_log/models/emotion.dart';
-
 import '../components/edit_emotion_list_item_widget.dart';
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
@@ -7,7 +5,6 @@ import '../backend/emotion_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class SettingsWidget extends StatefulWidget {
@@ -58,7 +55,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                             "/" +
                             emotionsMaxCount.toString() +
                             ")";
-                      }(this.emotService.getCurEmotions().length, this.emotService.getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
+                      }(
+                          this.emotService.getCurEmotions().length,
+                          this
+                              .emotService
+                              .getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
                       style: FlutterFlowTheme.of(context).bodyText1.override(
                             fontFamily: 'Poppins',
                             fontSize: 18,
@@ -69,8 +70,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
               Builder(
                 builder: (context) {
-                  final emotions =
-                      emotService.getCurEmotions(); //FFAppState().emotions.toList().take(5).toList();
+                  final emotions = emotService
+                      .getCurEmotions(); //FFAppState().emotions.toList().take(5).toList();
                   return ListView.builder(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -94,37 +95,36 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     );
   }
 
-
   Widget addIfAllowedButton() {
-    if (emotService.getCurEmotions().length == emotService.getCurEmotionLimit()) return Container();
-    
+    if (emotService.getCurEmotions().length == emotService.getCurEmotionLimit())
+      return Container();
+
     return Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
-                child: InkWell(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).primaryBackground,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
-                      child: Icon(
-                        Icons.add,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                  onTap:() {
-                    setState(() {
-                      emotService.addEmotion("hi", "fixMe", Colors.deepOrange);
-                    });
-                  }
-                ),
-              );
+      padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
+      child: InkWell(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: FlutterFlowTheme.of(context).secondaryText,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.of(context).secondaryText,
+                size: 32,
+              ),
+            ),
+          ),
+          onTap: () {
+            setState(() {
+              emotService.addEmotion("hi", "fixMe", Colors.deepOrange);
+            });
+          }),
+    );
   }
 }

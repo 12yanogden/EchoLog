@@ -3,7 +3,6 @@ import 'package:echo_log/backend/emotion_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/emotion.dart';
 
@@ -26,14 +25,13 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
   @override
   void initState() {
     super.initState();
-    emotionNameController = TextEditingController(
-      text: widget.emotion.name
-    );
+    emotionNameController = TextEditingController(text: widget.emotion.name);
   }
 
   TextEditingController? updateTextController() {
     //emotionNameController.text(widget.emotion.name)
-    emotionNameController!.value = emotionNameController!.value.copyWith(text: widget.emotion.name);
+    emotionNameController!.value =
+        emotionNameController!.value.copyWith(text: widget.emotion.name);
     return emotionNameController;
   }
 
@@ -54,13 +52,11 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
         children: [
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 11, 0),
-            child: Text( 
-              widget.emotion.emoji, 
-              textAlign: TextAlign.center, 
-              style: TextStyle(
-                fontSize: 32.0,
-              )
-            ),
+            child: Text(widget.emotion.emoji,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 32.0,
+                )),
           ),
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 22, 0),
@@ -68,7 +64,7 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: widget.emotion.color,   
+                color: widget.emotion.color,
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
@@ -77,7 +73,8 @@ class _EditEmotionListItemWidgetState extends State<EditEmotionListItemWidget> {
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 22, 0),
               child: TextFormField(
-                readOnly: true, // This makes it uneditable - remove if adding functionality of editing names
+                readOnly:
+                    true, // This makes it uneditable - remove if adding functionality of editing names
                 controller: updateTextController(),
                 obscureText: false,
                 decoration: InputDecoration(

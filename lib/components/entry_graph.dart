@@ -1,11 +1,8 @@
 import 'package:echo_log/models/emotion_rating.dart';
-import 'package:echo_log/models/entry.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../backend/emotion_service.dart';
-import '../backend/entry_service.dart';
 import '../models/emotion.dart';
-import '../components/theme_colors.dart';
 
 class EntryGraph extends StatefulWidget {
   List<EmotionRating> ratings;
@@ -47,7 +44,7 @@ class EntryGraphState extends State<EntryGraph> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: width*1.5,
+        width: width * 1.5,
         height: MediaQuery.of(context).size.height / 2.5,
         child: AspectRatio(
           aspectRatio: 1,
@@ -74,7 +71,8 @@ class EntryGraphState extends State<EntryGraph> {
                       gridData: FlGridData(
                         show: true,
                         horizontalInterval: 1,
-                        getDrawingHorizontalLine: (value) => FlLine(color: Colors.grey, strokeWidth: 1),
+                        getDrawingHorizontalLine: (value) =>
+                            FlLine(color: Colors.grey, strokeWidth: 1),
                         drawVerticalLine: false,
                       ),
                     ),

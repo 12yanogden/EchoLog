@@ -9,11 +9,8 @@ import '../flutter_flow/flutter_flow_calendar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class TrendsWidget extends StatefulWidget {
   const TrendsWidget({Key? key}) : super(key: key);
@@ -156,30 +153,33 @@ class _TrendsWidgetState extends State<TrendsWidget>
                   ),
 
                   // Graph Area--------------------------------------------
-                  Expanded ( child: Center(
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: MediaQuery.of(context).size.height / 1.7,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-
-                            children: <Widget>[
-                              for (int i = 0; i < EntryService().entries.length; i++)
-                                Container (
-                                  margin: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(color: Color(0xFFF5D7AB), borderRadius: BorderRadius.all(Radius.circular(20))),
-                                  
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text("Date Here", style: TextStyle(color: Colors.black)),
-                                      EntryGraph(EntryService().entries[i].ratings),
-                                      Text("Play Button here", style: TextStyle(color: Colors.black)),
-                                    ])),
-                            ]),
-                    )
-                  ))
+                  Expanded(
+                      child: Center(
+                          child: Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height / 1.7,
+                    child:
+                        ListView(scrollDirection: Axis.horizontal, children: <
+                            Widget>[
+                      for (int i = 0; i < EntryService().entries.length; i++)
+                        Container(
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: Color(0xFFF5D7AB),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Date Here",
+                                      style: TextStyle(color: Colors.black)),
+                                  EntryGraph(EntryService().entries[i].ratings),
+                                  Text("Play Button here",
+                                      style: TextStyle(color: Colors.black)),
+                                ])),
+                    ]),
+                  )))
                   //
                 ],
               ),
