@@ -14,6 +14,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../components/date_stamp.dart';
+import '../components/play_button.dart';
+import '../components/entry_summary_list_view.dart';
 
 class TrendsWidget extends StatefulWidget {
   const TrendsWidget({Key? key}) : super(key: key);
@@ -24,6 +26,7 @@ class TrendsWidget extends StatefulWidget {
 
 class _TrendsWidgetState extends State<TrendsWidget>
     with TickerProviderStateMixin {
+
   final animationsMap = {
     'containerOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -159,29 +162,7 @@ class _TrendsWidgetState extends State<TrendsWidget>
                       child: Container(
                         alignment: Alignment.center,
                         height: MediaQuery.of(context).size.height / 1.7,
-                        child: ListView(
-                            scrollDirection: Axis.horizontal,
-
-                            children: <Widget>[
-                              for (int i = 0; i < EntryService().entries.length; i++)
-                                Wrap(
-                                children: [Container (
-                                  //margin: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration( 
-                                    border: Border(left: BorderSide(color: Colors.grey,)),
-                                    ),
-                                  width: 140,
-                                  padding: EdgeInsets.all(10),
-                                  
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      DateStamp(date: EntryService().entries[i].date),
-                                      EntryGraph(EntryService().entries[i].ratings),
-                                      Text("Play Button here", style: TextStyle(color: Colors.black)),
-                                    ]))]),
-                            ]),
+                        child: EntrySummaryListView(MediaQuery.of(context).size.height / 1.7),
                     )
                   ))
                   //

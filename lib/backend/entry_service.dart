@@ -46,7 +46,7 @@ class EntryService {
       EmotionRating(3, 4),
       EmotionRating(4, 5)
     ]),
-  ];
+  ].reversed.toList();
 
   EntryService._internal();
 

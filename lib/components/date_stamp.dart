@@ -19,12 +19,7 @@ class DateStamp extends StatelessWidget {
     var month = findMonth(date);
     var monthDay = date.day.toString();
     var total = month + " " + monthDay;
-    return Container(
-      padding: EdgeInsets.all(5.0),
-      margin: EdgeInsets.all(10.0),
-      //width: 100, // standard width
-      height: 100, // standard height
-
+    return Container( // Takes hieght and width info from parent widgets
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: ThemeColors.offBlack, width: 2),
