@@ -59,8 +59,6 @@ class _PlayButtonState extends State<PlayButton> {
       },
       child: Image.asset(
         'assets/images/play_button.png',
-        width: 32,
-        height: 32,
         fit: BoxFit.cover,
       ),
     );

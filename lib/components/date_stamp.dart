@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../models/emotion.dart';
+import '../components/theme_colors.dart';
 
 class DateStamp extends StatelessWidget {
   final DateTime date;
@@ -18,23 +19,20 @@ class DateStamp extends StatelessWidget {
     var month = findMonth(date);
     var monthDay = date.day.toString();
     var total = month + " " + monthDay;
-    return Container(
-      padding: EdgeInsets.all(2.0),
-      width: 60, // standard width
-      height: 60, // standard height
+    return Container( // Takes hieght and width info from parent widgets
       decoration: BoxDecoration(
-        color: Color.fromARGB(
-            255, 77, 132, 89), // FIX THIS! NEEDS TO BE COLOR PALLET
-        borderRadius: BorderRadius.circular(8.0),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: ThemeColors.offBlack, width: 2),
+
       ),
       //color: Colors.grey[300],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Text(weekDay, style: TextStyle(fontSize: 20, color: Colors.white)),
+          Text(weekDay, style: TextStyle(fontSize: 30, color: ThemeColors.offBlack)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text(total, style: TextStyle(color: Colors.white))],
+            children: [Text(total, style: TextStyle(color: ThemeColors.offBlack))],
           ),
         ],
       ),

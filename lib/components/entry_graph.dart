@@ -44,18 +44,15 @@ class EntryGraphState extends State<EntryGraph> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: width * 1.5,
-        height: MediaQuery.of(context).size.height / 2.5,
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: Padding(
-            padding: const EdgeInsets.all(12),
+        width: width*1.7,
+        // child: AspectRatio(
+        //   aspectRatio: 1,
+          
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(
-                  height: 38,
-                ),
+                
                 Expanded(
                   child: BarChart(
                     BarChartData(
@@ -78,13 +75,11 @@ class EntryGraphState extends State<EntryGraph> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 12,
-                ),
+                
               ],
             ),
-          ),
-        ));
+          
+        );
   }
 
   BarChartGroupData makeGroupData(
