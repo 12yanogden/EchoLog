@@ -78,20 +78,22 @@ class _EmotionNamerState extends State<EmotionNamer> {
                               )),
                         ),
                       ),
-                      Wrap(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        spacing: 16,
-                        children: [
-                          Text(
-                            textAlign: TextAlign.center,
-                            '${this.emoji}',
-                            style: const TextStyle(
-                              fontSize: 32,
-                            ),
-                          ),
-                          ColorSquare(color: color)
-                        ],
-                      )
+                      Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Wrap(
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            spacing: 20,
+                            children: [
+                              Text(
+                                textAlign: TextAlign.center,
+                                '${this.emoji}',
+                                style: const TextStyle(
+                                  fontSize: 32,
+                                ),
+                              ),
+                              ColorSquare(color: color)
+                            ],
+                          ))
                     ],
                   ),
                 )
