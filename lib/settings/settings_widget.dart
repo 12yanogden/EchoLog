@@ -1,3 +1,5 @@
+import '../components/color_square.dart';
+import '../components/date_stamp.dart';
 import '../components/edit_emotion_list_item_widget.dart';
 import '../components/emoji_picker_widget.dart';
 import '../components/hamburger_menu_widget.dart';
