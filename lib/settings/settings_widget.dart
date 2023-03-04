@@ -1,4 +1,5 @@
 import '../components/edit_emotion_list_item_widget.dart';
+import '../components/emoji_picker_widget.dart';
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
 import '../backend/emotion_service.dart';
@@ -23,6 +24,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   void dispose() {
     _unfocusNode.dispose();
     super.dispose();
+  }
+
+  refresh() {
+    setState(() {});
   }
 
   @override
@@ -100,31 +105,34 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       return Container();
 
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
-      child: InkWell(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryBackground,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: FlutterFlowTheme.of(context).secondaryText,
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
-              child: Icon(
-                Icons.add,
-                color: FlutterFlowTheme.of(context).secondaryText,
-                size: 32,
-              ),
-            ),
-          ),
-          onTap: () {
-            setState(() {
-              emotService.addEmotion("hi", "fixMe", Colors.deepOrange);
-            });
-          }),
-    );
+                padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
+                child: InkWell(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).primaryBackground,
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
+                      child: Icon(
+                        Icons.add,
+                        color: FlutterFlowTheme.of(context).secondaryText,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                  onTap:() {
+                    Popup(
+                      emotService: emotService,
+                      refreshParent: refresh
+                    ).show(context);
+                    setState(() {});
+                  }
+                ),
+              );
   }
 }
