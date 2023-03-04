@@ -1,6 +1,7 @@
 import 'package:echo_log/models/emotion.dart';
 
 import '../components/edit_emotion_list_item_widget.dart';
+import '../components/emoji_picker_widget.dart';
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
 import '../backend/emotion_service.dart';
@@ -26,6 +27,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   void dispose() {
     _unfocusNode.dispose();
     super.dispose();
+  }
+
+  refresh() {
+    setState(() {});
   }
 
   @override
@@ -120,9 +125,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     ),
                   ),
                   onTap:() {
-                    setState(() {
-                      emotService.addEmotion("hi", "fixMe", Colors.deepOrange);
-                    });
+                    Popup(
+                      emotService: emotService,
+                      refreshParent: refresh
+                    ).show(context);
+                    setState(() {});
                   }
                 ),
               );
