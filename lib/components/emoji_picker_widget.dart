@@ -3,25 +3,6 @@ import 'package:emoji_selector/emoji_selector.dart';
 import '../backend/emotion_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
-class Popup {
-  final EmotionService emotService;
-  final Function() refreshParent;
-
-  Popup({required this.emotService, required this.refreshParent});
-
-  show(BuildContext context) {
-    return showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return EmojiPickerWidget(
-            emotService: emotService,
-            refreshParent: refreshParent,
-          );
-        });
-  }
-}
-
 class EmojiPickerWidget extends StatefulWidget {
   final EmotionService emotService;
   final Function() refreshParent;
