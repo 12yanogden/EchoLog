@@ -1,7 +1,5 @@
-import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class TopBarWidget extends StatefulWidget {
@@ -35,16 +33,16 @@ class _TopBarWidgetState extends State<TopBarWidget> {
             ),
           ),
         ),
-        Container(
-          width: 68,
-          height: 68,
-          decoration: BoxDecoration(),
-          child: Icon(
-            Icons.search_rounded,
-            color: Colors.black,
-            size: 24,
-          ),
-        ),
+        // Container(
+        //   width: 68,
+        //   height: 68,
+        //   decoration: BoxDecoration(),
+        //   child: Icon(
+        //     Icons.search_rounded,
+        //     color: Colors.black,
+        //     size: 24,
+        //   ),
+        // ),
       ],
     );
   }

@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:echo_log/models/emotion_rating.dart';
 
 class Entry {

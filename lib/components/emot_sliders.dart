@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 import './theme_colors.dart';
-import '../backend/emotion_service.dart';
 import '../models/emotion.dart';
 
 class EmotSliders extends StatefulWidget {
@@ -20,12 +19,12 @@ class EmotSliders extends StatefulWidget {
       required this.emotions,
       this.isEnabled = true})
       : super(key: key) {
-        this.emotions.forEach((emot) {
-          this.emojis.add(emot.emoji);
-          this.emojiNames.add(emot.name);
-          this.emojiColors.add(emot.color);
-        });
-      }
+    this.emotions.forEach((emot) {
+      this.emojis.add(emot.emoji);
+      this.emojiNames.add(emot.name);
+      this.emojiColors.add(emot.color);
+    });
+  }
 
   @override
   _EmotSliderState createState() => _EmotSliderState(
@@ -33,7 +32,7 @@ class EmotSliders extends StatefulWidget {
 
   List<double> getEmotValuesCopy() {
     List<double> copy = [];
-    for(double value in emotionValues) {
+    for (double value in emotionValues) {
       copy.add(value);
     }
 
@@ -67,22 +66,18 @@ class _EmotSliderState extends State<EmotSliders> {
 
   Container _EmotSlider(
       int num, String emoji, String emotName, Color emotColor) {
-
     Color bgColor = ThemeColors.primaryBg;
 
     return Container(
       padding: EdgeInsets.all(3.0),
       margin: EdgeInsets.all(2.0),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: bgColor
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(20)), color: bgColor),
       child: SliderTheme(
         data: SliderThemeData(
             thumbShape: _SliderThumbEmot(thumbRadious, emoji, bgColor),
             trackShape: TriangleTrackShape(emotColor, bgColor),
-            tickMarkShape: SliderTickMarkShape.noTickMark
-            ),
+            tickMarkShape: SliderTickMarkShape.noTickMark),
         child: Slider(
             value: this.emotionValues[num],
             max: 5,
@@ -188,7 +183,6 @@ class TriangleTrackShape extends SliderTrackShape {
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 
-
   @override
   void paint(PaintingContext context, Offset offset,
       {required Animation<double> enableAnimation,
@@ -255,29 +249,32 @@ class TriangleTrackShape extends SliderTrackShape {
     final activePathSegment = Path()
       ..moveTo(trackRect.left, trackRect.bottom)
       ..lineTo(trackRect.left, trackRect.top)
-      ..lineTo(thumbCenter.dx, trackRect.top - (yPoint/2))
-      ..lineTo(thumbCenter.dx, trackRect.bottom + (yPoint/2))
+      ..lineTo(thumbCenter.dx, trackRect.top - (yPoint / 2))
+      ..lineTo(thumbCenter.dx, trackRect.bottom + (yPoint / 2))
       ..close();
 
     final inactivePathSegment = Path()
-      ..moveTo(thumbCenter.dx, trackRect.bottom + (yPoint/2))
-      ..lineTo(thumbCenter.dx, trackRect.top - (yPoint/2))
-      ..lineTo(trackRect.right, trackRect.top - (trackHeightVariation/2))
-      ..lineTo(trackRect.right, trackRect.bottom + (trackHeightVariation/2))
+      ..moveTo(thumbCenter.dx, trackRect.bottom + (yPoint / 2))
+      ..lineTo(thumbCenter.dx, trackRect.top - (yPoint / 2))
+      ..lineTo(trackRect.right, trackRect.top - (trackHeightVariation / 2))
+      ..lineTo(trackRect.right, trackRect.bottom + (trackHeightVariation / 2))
       ..close();
 
-    List<Path> tickMarks = []; 
-    
-    for (int i = 0; i < 6; i++) {
-      double tickOffset = i*totalLength/5;
-      tickMarks.add(Path()
-      ..moveTo(trackRect.left + tickOffset, trackRect.bottom + (trackHeightVariation/2))
-      ..lineTo(trackRect.left + tickMarkWidth + tickOffset, trackRect.bottom + (trackHeightVariation/2))
-      ..lineTo(trackRect.left + tickMarkWidth + tickOffset, trackRect.top - (trackHeightVariation/2))
-      ..lineTo(trackRect.left + tickOffset, trackRect.top - (trackHeightVariation/2))
-      ..close());
-    }
+    List<Path> tickMarks = [];
 
+    for (int i = 0; i < 6; i++) {
+      double tickOffset = i * totalLength / 5;
+      tickMarks.add(Path()
+        ..moveTo(trackRect.left + tickOffset,
+            trackRect.bottom + (trackHeightVariation / 2))
+        ..lineTo(trackRect.left + tickMarkWidth + tickOffset,
+            trackRect.bottom + (trackHeightVariation / 2))
+        ..lineTo(trackRect.left + tickMarkWidth + tickOffset,
+            trackRect.top - (trackHeightVariation / 2))
+        ..lineTo(trackRect.left + tickOffset,
+            trackRect.top - (trackHeightVariation / 2))
+        ..close());
+    }
 
     context.canvas.drawPath(activePathSegment, leftTrackPaint);
     context.canvas.drawPath(inactivePathSegment, rightTrackPaint);

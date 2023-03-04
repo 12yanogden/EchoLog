@@ -1,7 +1,6 @@
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class HamburgerMenuWidget extends StatefulWidget {
@@ -37,7 +36,9 @@ class _HamburgerMenuWidgetState extends State<HamburgerMenuWidget> {
             context.pushNamed('Home');
           },
           child: Container(
-            margin: EdgeInsets.only(top: 24.0), // added margin because on android the time overlay make it impossible to click
+            margin: EdgeInsets.only(
+                top:
+                    24.0), // added margin because on android the time overlay make it impossible to click
             decoration: BoxDecoration(),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 12),

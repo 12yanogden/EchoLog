@@ -1,9 +1,6 @@
 import 'package:echo_log/models/emotion_rating.dart';
 import 'package:echo_log/models/entry.dart';
 
-import '../models/emotion.dart';
-import 'package:flutter/material.dart';
-
 class EntryService {
   // Singleton Pattern----------------
   static final EntryService _instance = EntryService._internal();
@@ -12,7 +9,7 @@ class EntryService {
     Entry(DateTime.now().subtract(Duration(days: 1)),
         "../assets/fakeDataRecording.mp4", [
       EmotionRating(0, 1),
-      EmotionRating(1, 2),
+      EmotionRating(1, 3),
       EmotionRating(2, 3),
       EmotionRating(3, 4),
       EmotionRating(4, 5)
@@ -49,7 +46,7 @@ class EntryService {
       EmotionRating(3, 4),
       EmotionRating(4, 5)
     ]),
-  ];
+  ].reversed.toList();
 
   EntryService._internal();
 

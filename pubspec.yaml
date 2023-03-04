@@ -53,6 +53,7 @@ dependencies:
   emoji_picker_flutter: ^1.5.2
   flutter_sound: ^9.2.13
   emoji_selector: ^0.0.5
+  fl_chart: ^0.61.0
 
 dev_dependencies:
   flutter_launcher_icons: 0.9.3
