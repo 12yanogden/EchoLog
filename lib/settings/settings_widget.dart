@@ -1,9 +1,3 @@
-import 'dart:js_util';
-
-import 'package:emoji_selector/emoji_selector.dart';
-
-import '../components/color_square.dart';
-import '../components/date_stamp.dart';
 import '../components/edit_emotion_list_item_widget.dart';
 import '../components/emoji_picker_widget.dart';
 import '../components/hamburger_menu_widget.dart';
@@ -14,7 +8,6 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../color_picker/color_picker.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);
@@ -59,31 +52,24 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  InkWell(
-                    onTap: () async {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) =>
-                              ColorPicker(emoji: '\u{1f44c}')));
-                    },
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
-                      child: Text(
-                        (int emotionsCount, int emotionsMaxCount) {
-                          return "Your Emotions (" +
-                              emotionsCount.toString() +
-                              "/" +
-                              emotionsMaxCount.toString() +
-                              ")";
-                        }(
-                            this.emotService.getCurEmotions().length,
-                            this
-                                .emotService
-                                .getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
-                        style: FlutterFlowTheme.of(context).bodyText1.override(
-                              fontFamily: 'Poppins',
-                              fontSize: 18,
-                            ),
-                      ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
+                    child: Text(
+                      (int emotionsCount, int emotionsMaxCount) {
+                        return "Your Emotions (" +
+                            emotionsCount.toString() +
+                            "/" +
+                            emotionsMaxCount.toString() +
+                            ")";
+                      }(
+                          this.emotService.getCurEmotions().length,
+                          this
+                              .emotService
+                              .getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
+                      style: FlutterFlowTheme.of(context).bodyText1.override(
+                            fontFamily: 'Poppins',
+                            fontSize: 18,
+                          ),
                     ),
                   ),
                 ],

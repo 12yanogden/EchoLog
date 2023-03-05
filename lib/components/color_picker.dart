@@ -15,7 +15,7 @@ class ColorPicker extends StatefulWidget {
 class _ColorPickerState extends State<ColorPicker> {
   _ColorPickerState({required this.emoji});
   final String emoji;
-  Color color = Color.fromARGB(0, 0, 0, 0);
+  Color? color;
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
       width: 50, height: 50, fit: BoxFit.cover);
 
@@ -25,7 +25,7 @@ class _ColorPickerState extends State<ColorPicker> {
     });
   }
 
-  Color get selectedColor => this.color;
+  Color? get selectedColor => this.color;
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,23 @@ class _ColorPickerState extends State<ColorPicker> {
                     Padding(
                       padding: EdgeInsets.only(top: 32),
                       child: Center(
-                        child: Text('Choose a color for',
-                            style: TextStyle(
-                              wordSpacing: 0,
-                              letterSpacing: 0,
-                              fontSize: 25,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                            )),
-                      ),
+                          child: this.color == null
+                              ? Text('Choose a color for',
+                                  style: TextStyle(
+                                    wordSpacing: 0,
+                                    letterSpacing: 0,
+                                    fontSize: 25,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ))
+                              : Text('Confirm?',
+                                  style: TextStyle(
+                                    wordSpacing: 0,
+                                    letterSpacing: 0,
+                                    fontSize: 25,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ))),
                     ),
                     Padding(
                         padding: EdgeInsets.only(top: 20),
@@ -81,21 +90,24 @@ class _ColorPickerState extends State<ColorPicker> {
                               fontSize: 32,
                             ),
                           ),
-                          ColorSquare(color: color),
+                          if (this.color != null)
+                            ColorSquare(color: this.color!)
                         ]))
                   ],
                 ),
               ),
-              SizedBox(
-                child: IconButton(
-                    icon: checkMarkBlack,
-                    constraints: BoxConstraints.expand(width: 100, height: 100),
-                    onPressed: () {
-                      setState(() {
-                        Navigator.pop(context);
-                      });
-                    }),
-              ),
+              if (this.color != null)
+                SizedBox(
+                  child: IconButton(
+                      icon: checkMarkBlack,
+                      constraints:
+                          BoxConstraints.expand(width: 100, height: 100),
+                      onPressed: () {
+                        setState(() {
+                          Navigator.pop(context);
+                        });
+                      }),
+                ),
               Expanded(
                 //Color Palette --to be refactored to a drawer later
                 child: Padding(
@@ -104,7 +116,7 @@ class _ColorPickerState extends State<ColorPicker> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
+                          padding: const EdgeInsets.only(bottom: 0.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -154,7 +166,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
+                          padding: const EdgeInsets.only(bottom: 0.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -204,7 +216,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
+                          padding: const EdgeInsets.only(bottom: 0.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -254,7 +266,7 @@ class _ColorPickerState extends State<ColorPicker> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 20.0),
+                          padding: const EdgeInsets.only(bottom: 0.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
