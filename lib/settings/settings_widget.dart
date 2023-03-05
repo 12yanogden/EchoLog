@@ -131,11 +131,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           ),
           onTap: () {
             Popup(
-                    widget: EmotionNamer(
-                        emotService: emotService,
-                        emoji: "😄",
-                        color: Color(0xFF0000FF),
-                        refreshParent: refresh))
+                    widget: EmojiPickerWidget(
+                        emotService: emotService, refreshParent: refresh))
                 .show(context);
             setState(() {});
           }),
