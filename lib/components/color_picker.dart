@@ -1,31 +1,32 @@
 import 'package:echo_log/components/color_square.dart';
-import 'package:echo_log/components/popup.dart';
 import 'package:flutter/material.dart';
-import 'package:emoji_selector/emoji_selector.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
 class ColorPicker extends StatefulWidget {
-  const ColorPicker({super.key, required this.emoji});
+  ColorPicker({super.key, required this.emoji, required this.setColor});
   final String emoji;
+  final void Function(dynamic)? setColor;
+  Color? color;
 
   @override
   State<ColorPicker> createState() => _ColorPickerState(emoji: emoji);
+
+  Color? getColor() {
+    return this.color;
+  }
 }
 
 class _ColorPickerState extends State<ColorPicker> {
   _ColorPickerState({required this.emoji});
   final String emoji;
-  Color? color;
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
       width: 50, height: 50, fit: BoxFit.cover);
 
   void _changeColor(color) {
     setState(() {
-      this.color = color;
+      widget.color = color;
     });
   }
-
-  Color? get selectedColor => this.color;
 
   @override
   Widget build(BuildContext context) {
@@ -46,15 +47,14 @@ class _ColorPickerState extends State<ColorPicker> {
               Align(
                 alignment: Alignment.topRight,
                 child: IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: FlutterFlowTheme.of(context).alternate,
-                    size: 25,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                    icon: Icon(
+                      Icons.close,
+                      color: FlutterFlowTheme.of(context).alternate,
+                      size: 25,
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
               ),
               Expanded(
                 child: Column(
@@ -62,7 +62,7 @@ class _ColorPickerState extends State<ColorPicker> {
                     Padding(
                       padding: EdgeInsets.only(top: 32),
                       child: Center(
-                          child: this.color == null
+                          child: widget.color == null
                               ? Text('Choose a color for',
                                   style: TextStyle(
                                     wordSpacing: 0,
@@ -90,24 +90,19 @@ class _ColorPickerState extends State<ColorPicker> {
                               fontSize: 32,
                             ),
                           ),
-                          if (this.color != null)
-                            ColorSquare(color: this.color!)
+                          if (widget.color != null)
+                            ColorSquare(color: widget.color!)
                         ]))
                   ],
                 ),
               ),
-              if (this.color != null)
+              if (widget.color != null)
                 SizedBox(
-                  child: IconButton(
-                      icon: checkMarkBlack,
-                      constraints:
-                          BoxConstraints.expand(width: 100, height: 100),
-                      onPressed: () {
-                        setState(() {
-                          Navigator.pop(context);
-                        });
-                      }),
-                ),
+                    child: IconButton(
+                        icon: checkMarkBlack,
+                        constraints:
+                            BoxConstraints.expand(width: 100, height: 100),
+                        onPressed: () => widget.setColor!(widget.color))),
               Expanded(
                 //Color Palette --to be refactored to a drawer later
                 child: Padding(

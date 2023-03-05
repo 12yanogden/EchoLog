@@ -1,3 +1,4 @@
+import '../components/color_picker.dart';
 import '../components/edit_emotion_list_item_widget.dart';
 import '../components/emoji_picker_widget.dart';
 import '../components/emotion_namer.dart';
@@ -10,6 +11,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../models/emotion.dart';
+
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);
 
@@ -21,6 +24,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   final EmotionService emotService = EmotionService();
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? emoji;
+  Color? color;
+  String? emotionName;
 
   @override
   void dispose() {
@@ -32,9 +38,57 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     setState(() {});
   }
 
+  setEmoji(inputEmoji) {
+    setState(() {
+      this.emoji = inputEmoji;
+      Navigator.pop(context);
+    });
+  }
+
+  setColor(inputColor) {
+    setState(() {
+      this.color = inputColor;
+      Navigator.pop(context);
+    });
+  }
+
+  setEmotionName(inputEmotionName) {
+    setState(() {
+      this.emotionName = inputEmotionName;
+      Navigator.pop(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+
+    showEmojiPicker() {
+      Popup(widget: EmojiPickerWidget(setEmoji: setEmoji)).show(context);
+      return Container();
+    }
+
+    showColorPicker() {
+      Popup(widget: ColorPicker(emoji: this.emoji!, setColor: setColor))
+          .show(context);
+      return Container();
+    }
+
+    showEmotionNamer() {
+      Popup(
+              widget: EmotionNamer(
+                  emoji: this.emoji!,
+                  color: this.color!,
+                  setEmotionName: setEmotionName))
+          .show(context);
+      return Container();
+    }
+
+    uploadEmotion() {
+      emotService.addEmotion(Emotion(this.emoji!, this.color!,
+          this.emotionName!, emotService.genNextEmotionId()));
+      return Container();
+    }
 
     return Scaffold(
       key: scaffoldKey,
@@ -94,46 +148,65 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   );
                 },
               ),
-              addIfAllowedButton(),
+              this.emoji == null &&
+                      this.color == null &&
+                      this.emotionName == null &&
+                      emotService.getCurEmotions().length <
+                          emotService.getCurEmotionLimit()
+                  ? Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
+                      child: InkWell(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context)
+                                  .primaryBackground,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                            ),
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
+                              child: Icon(
+                                Icons.add,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 32,
+                              ),
+                            ),
+                          ),
+                          onTap: () {
+                            Column(
+                              children: [],
+                            );
+                            setState(() {
+                              showEmojiPicker();
+                            });
+                          }),
+                    )
+                  : Container(),
+              this.emoji != null &&
+                      this.color == null &&
+                      this.emotionName == null
+                  ? showColorPicker()
+                  : Container(),
+              this.emoji != null &&
+                      this.color != null &&
+                      this.emotionName == null
+                  ? showEmotionNamer()
+                  : Container(),
+              this.emoji != null &&
+                      this.color != null &&
+                      this.emotionName != null
+                  ? uploadEmotion()
+                  : Container()
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget addIfAllowedButton() {
-    if (emotService.getCurEmotions().length == emotService.getCurEmotionLimit())
-      return Container();
-
-    return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
-      child: InkWell(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).primaryBackground,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: FlutterFlowTheme.of(context).secondaryText,
-              ),
-            ),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
-              child: Icon(
-                Icons.add,
-                color: FlutterFlowTheme.of(context).secondaryText,
-                size: 32,
-              ),
-            ),
-          ),
-          onTap: () {
-            Popup(
-                    widget: EmojiPickerWidget(
-                        emotService: emotService, refreshParent: refresh))
-                .show(context);
-            setState(() {});
-          }),
     );
   }
 }

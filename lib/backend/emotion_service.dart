@@ -12,42 +12,45 @@ class EmotionService {
   }
   // Singleton Pattern---------------
 
-  List<Emotion> cur_emotions = [
-    Emotion("😡", "angry", Colors.red, 0),
-    Emotion("😭", "sad", Colors.blue, 1),
-    Emotion("🥱", "tired", Colors.purple, 2),
-    Emotion("😖", "stressed", Colors.yellow, 3),
-    Emotion("😄", "happy", Colors.green, 4)
+  List<Emotion> curEmotions = [
+    Emotion("😡", Colors.red, "angry", 0),
+    Emotion("😭", Colors.blue, "sad", 1),
+    Emotion("🥱", Colors.purple, "tired", 2),
+    Emotion("😖", Colors.yellow, "stressed", 3),
+    Emotion("😄", Colors.green, "happy", 4)
   ];
 
-  List<Emotion> all_emotions = [
-    Emotion("😡", "angry", Colors.red, 0),
-    Emotion("😭", "sad", Colors.blue, 1),
-    Emotion("🥱", "tired", Colors.purple, 2),
-    Emotion("😖", "stressed", Colors.yellow, 3),
-    Emotion("😄", "happy", Colors.green, 4)
+  List<Emotion> allEmotions = [
+    Emotion("😡", Colors.red, "angry", 0),
+    Emotion("😭", Colors.blue, "sad", 1),
+    Emotion("🥱", Colors.purple, "tired", 2),
+    Emotion("😖", Colors.yellow, "stressed", 3),
+    Emotion("😄", Colors.green, "happy", 4)
   ];
 
   List<Emotion> getCurEmotions() {
-    return cur_emotions;
+    return curEmotions;
   }
 
-  addEmotion(String emoji, String name, Color color) {
-    Emotion emotion = Emotion(emoji, name, color, all_emotions.length);
-    this.all_emotions.add(emotion);
-    this.cur_emotions.add(emotion);
+  addEmotion(Emotion emotion) {
+    this.allEmotions.add(emotion);
+    this.curEmotions.add(emotion);
   }
 
   removeCurEmotionByID(int id) {
-    Emotion emot = cur_emotions.firstWhere((emot) => emot.id == id);
-    cur_emotions.remove(emot);
+    Emotion emot = curEmotions.firstWhere((emot) => emot.id == id);
+    curEmotions.remove(emot);
   }
 
   Emotion getEmotionByID(int id) {
-    return all_emotions.firstWhere((emot) => emot.id == id);
+    return allEmotions.firstWhere((emot) => emot.id == id);
   }
 
   int getCurEmotionLimit() {
     return 5;
+  }
+
+  int genNextEmotionId() {
+    return allEmotions.length + 1;
   }
 }

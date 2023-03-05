@@ -1,40 +1,33 @@
 import 'package:echo_log/components/color_square.dart';
 import 'package:flutter/material.dart';
-import 'package:emoji_selector/emoji_selector.dart';
-import '../backend/emotion_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
 class EmotionNamer extends StatefulWidget {
-  final EmotionService emotService;
-  final String emoji;
-  final Color color;
-  final Function() refreshParent;
-
-  const EmotionNamer(
-      {Key? key,
-      required this.emotService,
+  EmotionNamer(
+      {super.key,
       required this.emoji,
       required this.color,
-      required this.refreshParent})
-      : super(key: key);
+      required this.setEmotionName});
+  final String emoji;
+  final Color color;
+  final void Function(dynamic)? setEmotionName;
+  String? emotionName;
 
   @override
-  _EmotionNamerState createState() =>
-      _EmotionNamerState(emotService, emoji, color, refreshParent);
+  _EmotionNamerState createState() => _EmotionNamerState(emoji, color);
+
+  String? getEmotionName() {
+    return this.emotionName;
+  }
 }
 
 class _EmotionNamerState extends State<EmotionNamer> {
-  final EmotionService emotService;
   final String emoji;
   final Color color;
-  String? name;
-
-  final Function() refreshParent;
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
       width: 100, height: 100, fit: BoxFit.cover);
 
-  _EmotionNamerState(
-      this.emotService, this.emoji, this.color, this.refreshParent);
+  _EmotionNamerState(this.emoji, this.color);
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +95,7 @@ class _EmotionNamerState extends State<EmotionNamer> {
                             width: 300,
                             child: TextField(
                               onChanged: (text) {
-                                this.name = text;
+                                widget.emotionName = text;
                                 setState(() {});
                               },
                               decoration: InputDecoration(
@@ -111,20 +104,14 @@ class _EmotionNamerState extends State<EmotionNamer> {
                               ),
                             ),
                           )),
-                      if (this.name != null && this.name!.length != 0)
+                      if (widget.emotionName != null &&
+                          widget.emotionName!.length != 0)
                         Padding(
-                          padding: EdgeInsets.only(top: 16),
-                          child: IconButton(
-                              icon: checkMarkBlack,
-                              onPressed: () {
-                                setState(() {
-                                  widget.emotService.addEmotion(
-                                      this.emoji, this.name!, this.color);
-                                  widget.refreshParent();
-                                  Navigator.pop(context);
-                                });
-                              }),
-                        )
+                            padding: EdgeInsets.only(top: 16),
+                            child: IconButton(
+                                icon: checkMarkBlack,
+                                onPressed: () => widget
+                                    .setEmotionName!(widget.emotionName))),
                     ],
                   ),
                 )

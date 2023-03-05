@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:emoji_selector/emoji_selector.dart';
-import '../backend/emotion_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 
 class EmojiPickerWidget extends StatefulWidget {
-  final EmotionService emotService;
-  final Function() refreshParent;
-
-  const EmojiPickerWidget(
-      {Key? key, required this.emotService, required this.refreshParent})
-      : super(key: key);
+  EmojiPickerWidget({Key? key, required this.setEmoji}) : super(key: key);
+  final void Function(dynamic)? setEmoji;
+  late final String? emoji;
 
   @override
   _EmojiPickerWidgetState createState() => _EmojiPickerWidgetState();
+
+  String? getEmoji() {
+    return this.emoji;
+  }
 }
 
 class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
@@ -80,17 +80,10 @@ class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
                             padding: EdgeInsets.only(top: 16),
                             child: IconButton(
                                 icon: checkMarkBlack,
-                                onPressed: () {
-                                  setState(() {
-                                    // todo: move to color picker screen
-                                    widget.emotService.addEmotion(
-                                        '${emojiData?.char}',
-                                        '${emojiData?.name}',
-                                        Colors.deepOrange);
-                                    widget.refreshParent();
-                                    Navigator.pop(context);
-                                  });
-                                }),
+                                onPressed: (() {
+                                  widget.setEmoji!(emojiData?.char);
+                                  Navigator.pop(context);
+                                })),
                           )
                         ],
                       )
