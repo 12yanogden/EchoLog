@@ -27,13 +27,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   final EmotionService emotService = EmotionService();
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final EmojiData emoji = EmojiData(
-      id: 'U+1F600',
-      name: "grin",
-      unified: "U+1F600",
-      char: "U+1F600",
-      category: "category",
-      skin: 0);
 
   @override
   void dispose() {
@@ -69,7 +62,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   InkWell(
                     onTap: () async {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ColorPicker(emoji: emoji)));
+                          builder: (context) =>
+                              ColorPicker(emoji: '\u{1f44c}')));
                     },
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
