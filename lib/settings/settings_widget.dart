@@ -1,3 +1,7 @@
+import 'dart:js_util';
+
+import 'package:emoji_selector/emoji_selector.dart';
+
 import '../components/color_square.dart';
 import '../components/date_stamp.dart';
 import '../components/edit_emotion_list_item_widget.dart';
@@ -10,6 +14,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../color_picker/color_picker.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);
@@ -22,6 +27,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   final EmotionService emotService = EmotionService();
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final EmojiData emoji = EmojiData(
+      id: 'U+1F600',
+      name: "grin",
+      unified: "U+1F600",
+      char: "U+1F600",
+      category: "category",
+      skin: 0);
 
   @override
   void dispose() {
@@ -54,24 +66,30 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
-                    child: Text(
-                      (int emotionsCount, int emotionsMaxCount) {
-                        return "Your Emotions (" +
-                            emotionsCount.toString() +
-                            "/" +
-                            emotionsMaxCount.toString() +
-                            ")";
-                      }(
-                          this.emotService.getCurEmotions().length,
-                          this
-                              .emotService
-                              .getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
+                  InkWell(
+                    onTap: () async {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ColorPicker(emoji: emoji)));
+                    },
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
+                      child: Text(
+                        (int emotionsCount, int emotionsMaxCount) {
+                          return "Your Emotions (" +
+                              emotionsCount.toString() +
+                              "/" +
+                              emotionsMaxCount.toString() +
+                              ")";
+                        }(
+                            this.emotService.getCurEmotions().length,
+                            this
+                                .emotService
+                                .getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
+                        style: FlutterFlowTheme.of(context).bodyText1.override(
+                              fontFamily: 'Poppins',
+                              fontSize: 18,
+                            ),
+                      ),
                     ),
                   ),
                 ],
