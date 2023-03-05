@@ -27,6 +27,8 @@ class _EmotionNamerState extends State<EmotionNamer> {
   final EmotionService emotService;
   final String emoji;
   final Color color;
+  String? name;
+
   final Function() refreshParent;
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
       width: 100, height: 100, fit: BoxFit.cover);
@@ -93,7 +95,36 @@ class _EmotionNamerState extends State<EmotionNamer> {
                               ),
                               ColorSquare(color: color)
                             ],
-                          ))
+                          )),
+                      Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: SizedBox(
+                            width: 300,
+                            child: TextField(
+                              onChanged: (text) {
+                                this.name = text;
+                                setState(() {});
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                hintText: '',
+                              ),
+                            ),
+                          )),
+                      if (this.name != null && this.name!.length != 0)
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: IconButton(
+                              icon: checkMarkBlack,
+                              onPressed: () {
+                                setState(() {
+                                  widget.emotService.addEmotion(
+                                      this.emoji, this.name!, this.color);
+                                  widget.refreshParent();
+                                  Navigator.pop(context);
+                                });
+                              }),
+                        )
                     ],
                   ),
                 )
