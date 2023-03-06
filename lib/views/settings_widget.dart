@@ -91,11 +91,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     }
 
     uploadEmotion() {
-      emotService.addEmotion(Emotion(this.emoji!, this.color!,
-          this.emotionName!, emotService.genNextEmotionId()));
-      this.emoji = null;
-      this.color = null;
-      this.emotionName = null;
+      Future.delayed(const Duration(microseconds: 10), () {
+        setState(() {
+          emotService.addEmotion(Emotion(this.emoji!, this.color!,
+              this.emotionName!, emotService.genNextEmotionId()));
+          this.emoji = null;
+          this.color = null;
+          this.emotionName = null;
+        });
+      });
       return Container();
     }
 
