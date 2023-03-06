@@ -44,11 +44,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   }
 
   setColor(inputColor) {
-    this.color = inputColor;
+    setState(() {
+      this.color = inputColor;
+    });
   }
 
   setEmotionName(inputEmotionName) {
-    this.emotionName = inputEmotionName;
+    setState(() {
+      this.emotionName = inputEmotionName;
+    });
   }
 
   @override
@@ -56,28 +60,33 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     context.watch<FFAppState>();
 
     showEmojiPicker() {
-      Navigator.of(context).push(MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (context) => EmojiPickerWidget(setEmoji: setEmoji),
-      ));
-      // Popup(widget: EmojiPickerWidget(setEmoji: setEmoji, refresh: refresh))
-      //     .show(context);
+      // Navigator.of(context).push(MaterialPageRoute(
+      //   fullscreenDialog: true,
+      //   builder: (context) => EmojiPickerWidget(setEmoji: setEmoji),
+      // ));
+      Future.delayed(const Duration(microseconds: 20), () {
+        Popup(widget: EmojiPickerWidget(setEmoji: setEmoji)).show(context);
+      });
       return Container();
     }
 
     showColorPicker() {
-      Popup(widget: ColorPicker(emoji: this.emoji!, setColor: setColor))
-          .show(context);
+      Future.delayed(const Duration(microseconds: 20), () {
+        Popup(widget: ColorPicker(emoji: this.emoji!, setColor: setColor))
+            .show(context);
+      });
       return Container();
     }
 
     showEmotionNamer() {
-      Popup(
-              widget: EmotionNamer(
-                  emoji: this.emoji!,
-                  color: this.color!,
-                  setEmotionName: setEmotionName))
-          .show(context);
+      Future.delayed(const Duration(microseconds: 20), () {
+        Popup(
+                widget: EmotionNamer(
+                    emoji: this.emoji!,
+                    color: this.color!,
+                    setEmotionName: setEmotionName))
+            .show(context);
+      });
       return Container();
     }
 

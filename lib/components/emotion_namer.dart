@@ -95,8 +95,9 @@ class _EmotionNamerState extends State<EmotionNamer> {
                             width: 300,
                             child: TextField(
                               onChanged: (text) {
-                                widget.setEmotionName(text);
-                                Navigator.pop(context);
+                                setState(() {
+                                  widget.emotionName = text;
+                                });
                               },
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),
@@ -110,8 +111,10 @@ class _EmotionNamerState extends State<EmotionNamer> {
                             padding: EdgeInsets.only(top: 16),
                             child: IconButton(
                                 icon: checkMarkBlack,
-                                onPressed: () =>
-                                    widget.setEmotionName(widget.emotionName))),
+                                onPressed: (() {
+                                  widget.setEmotionName(widget.emotionName);
+                                  Navigator.pop(context);
+                                }))),
                     ],
                   ),
                 )
