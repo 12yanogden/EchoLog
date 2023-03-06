@@ -3,8 +3,6 @@ import 'package:echo_log/backend/entry_service.dart';
 import '../components/hamburger_menu_widget.dart';
 import '../components/theme_colors.dart';
 import '../components/top_bar_widget.dart';
-import '../components/entry_graph.dart';
-
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_calendar.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -12,9 +10,6 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:provider/provider.dart';
-import 'package:fl_chart/fl_chart.dart';
-import '../components/date_stamp.dart';
-import '../components/play_button.dart';
 import '../components/entry_summary_list_view.dart';
 
 class TrendsWidget extends StatefulWidget {
@@ -26,7 +21,6 @@ class TrendsWidget extends StatefulWidget {
 
 class _TrendsWidgetState extends State<TrendsWidget>
     with TickerProviderStateMixin {
-
   final animationsMap = {
     'containerOnActionTriggerAnimation': AnimationInfo(
       trigger: AnimationTrigger.onActionTrigger,
@@ -75,7 +69,8 @@ class _TrendsWidgetState extends State<TrendsWidget>
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: ThemeColors.primaryBg, //FlutterFlowTheme.of(context).primaryBackground,
+      backgroundColor: ThemeColors
+          .primaryBg, //FlutterFlowTheme.of(context).primaryBackground,
       drawer: Drawer(
         elevation: 16,
         child: HamburgerMenuWidget(),
@@ -117,7 +112,8 @@ class _TrendsWidgetState extends State<TrendsWidget>
                             ),
                             child: Container(
                               decoration: BoxDecoration(
-                                color: ThemeColors.primaryBg, //FlutterFlowTheme.of(context).primaryBackground,
+                                color: ThemeColors
+                                    .primaryBg, //FlutterFlowTheme.of(context).primaryBackground,
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 4,
@@ -142,10 +138,11 @@ class _TrendsWidgetState extends State<TrendsWidget>
                                         size: 24,
                                       ),
                                     ),
-                                    Text(
-                                      'Select Date',
-                                      style: TextStyle(color: Colors.black) //FlutterFlowTheme.of(context).bodyText1,
-                                    ),
+                                    Text('Select Date',
+                                        style: TextStyle(
+                                            color: Colors
+                                                .black) //FlutterFlowTheme.of(context).bodyText1,
+                                        ),
                                   ],
                                 ),
                               ),
@@ -157,14 +154,15 @@ class _TrendsWidgetState extends State<TrendsWidget>
                   ),
 
                   // Graph Area--------------------------------------------
-                    
-                    Expanded (child: Center(
-                      child: Container(
-                        alignment: Alignment.center,
-                        height: MediaQuery.of(context).size.height / 1.7,
-                        child: EntrySummaryListView(MediaQuery.of(context).size.height / 1.7),
-                    )
-                  ))
+
+                  Expanded(
+                      child: Center(
+                          child: Container(
+                    alignment: Alignment.center,
+                    height: MediaQuery.of(context).size.height / 1.7,
+                    child: EntrySummaryListView(
+                        MediaQuery.of(context).size.height / 1.7),
+                  )))
                   //
                 ],
               ),
@@ -226,7 +224,8 @@ class _TrendsWidgetState extends State<TrendsWidget>
                       ),
                     ),
                     child: FlutterFlowCalendar(
-                      color: ThemeColors.primaryBg, // FlutterFlowTheme.of(context).primaryColor,
+                      color: ThemeColors
+                          .primaryBg, // FlutterFlowTheme.of(context).primaryColor,
                       weekFormat: false,
                       weekStartsMonday: false,
                       initialDate: FFAppState().today,

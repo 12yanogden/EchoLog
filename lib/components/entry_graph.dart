@@ -1,8 +1,8 @@
-import 'package:echo_log/models/emotion_rating.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import '../backend/emotion_service.dart';
 import '../models/emotion.dart';
+import '../models/emotion_rating.dart';
 
 class EntryGraph extends StatefulWidget {
   List<EmotionRating> ratings;
@@ -44,42 +44,39 @@ class EntryGraphState extends State<EntryGraph> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: width*1.7,
-        // child: AspectRatio(
-        //   aspectRatio: 1,
-          
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                
-                Expanded(
-                  child: BarChart(
-                    BarChartData(
-                      maxY: 5.1,
-                      minY: -0.1,
-                      titlesData: FlTitlesData(
-                        show: false,
-                      ),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      barGroups: showingBarGroups,
-                      gridData: FlGridData(
-                        show: true,
-                        horizontalInterval: 1,
-                        getDrawingHorizontalLine: (value) =>
-                            FlLine(color: Colors.grey, strokeWidth: 1),
-                        drawVerticalLine: false,
-                      ),
-                    ),
-                  ),
+      width: width * 1.7,
+      // child: AspectRatio(
+      //   aspectRatio: 1,
+
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: BarChart(
+              BarChartData(
+                maxY: 5.1,
+                minY: -0.1,
+                titlesData: FlTitlesData(
+                  show: false,
                 ),
-                
-              ],
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                barGroups: showingBarGroups,
+                gridData: FlGridData(
+                  show: true,
+                  horizontalInterval: 1,
+                  getDrawingHorizontalLine: (value) =>
+                      FlLine(color: Colors.grey, strokeWidth: 1),
+                  drawVerticalLine: false,
+                ),
+              ),
             ),
-          
-        );
+          ),
+        ],
+      ),
+    );
   }
 
   BarChartGroupData makeGroupData(

@@ -6,12 +6,11 @@ import '../components/hamburger_menu_widget.dart';
 import '../components/popup.dart';
 import '../components/top_bar_widget.dart';
 import '../backend/emotion_service.dart';
+import '../models/emotion.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../models/emotion.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key}) : super(key: key);

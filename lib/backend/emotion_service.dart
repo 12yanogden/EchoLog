@@ -1,5 +1,6 @@
-import '../models/emotion.dart';
 import 'package:flutter/material.dart';
+
+import '../models/emotion.dart';
 
 class EmotionService {
   // Singleton Pattern----------------
