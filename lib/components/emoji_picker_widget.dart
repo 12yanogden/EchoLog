@@ -4,7 +4,8 @@ import '../flutter_flow/flutter_flow_theme.dart';
 
 class EmojiPickerWidget extends StatefulWidget {
   EmojiPickerWidget({Key? key, required this.setEmoji}) : super(key: key);
-  final void Function(dynamic)? setEmoji;
+  final void Function(dynamic) setEmoji;
+  // final void Function() refresh;
   late final String? emoji;
 
   @override
@@ -81,7 +82,8 @@ class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
                             child: IconButton(
                                 icon: checkMarkBlack,
                                 onPressed: (() {
-                                  widget.setEmoji!(emojiData?.char);
+                                  widget.setEmoji(emojiData?.char);
+                                  // widget.refresh();
                                   Navigator.pop(context);
                                 })),
                           )

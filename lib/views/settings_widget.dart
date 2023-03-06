@@ -40,22 +40,15 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   setEmoji(inputEmoji) {
     setState(() {
       this.emoji = inputEmoji;
-      Navigator.pop(context);
     });
   }
 
   setColor(inputColor) {
-    setState(() {
-      this.color = inputColor;
-      Navigator.pop(context);
-    });
+    this.color = inputColor;
   }
 
   setEmotionName(inputEmotionName) {
-    setState(() {
-      this.emotionName = inputEmotionName;
-      Navigator.pop(context);
-    });
+    this.emotionName = inputEmotionName;
   }
 
   @override
@@ -63,7 +56,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     context.watch<FFAppState>();
 
     showEmojiPicker() {
-      Popup(widget: EmojiPickerWidget(setEmoji: setEmoji)).show(context);
+      Navigator.of(context).push(MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => EmojiPickerWidget(setEmoji: setEmoji),
+      ));
+      // Popup(widget: EmojiPickerWidget(setEmoji: setEmoji, refresh: refresh))
+      //     .show(context);
       return Container();
     }
 
@@ -152,40 +150,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                       this.emotionName == null &&
                       emotService.getCurEmotions().length <
                           emotService.getCurEmotionLimit()
-                  ? Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
-                      child: InkWell(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
-                              child: Icon(
-                                Icons.add,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 32,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            Column(
-                              children: [],
-                            );
-                            setState(() {
-                              showEmojiPicker();
-                            });
-                          }),
-                    )
+                  ? AddEmotionButton(showEmojiPicker: showEmojiPicker)
                   : Container(),
               this.emoji != null &&
                       this.color == null &&
@@ -206,6 +171,41 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class AddEmotionButton extends StatelessWidget {
+  final Function() showEmojiPicker;
+
+  AddEmotionButton({required this.showEmojiPicker});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsetsDirectional.fromSTEB(22, 22, 22, 0),
+      child: InkWell(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              color: FlutterFlowTheme.of(context).primaryBackground,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: FlutterFlowTheme.of(context).secondaryText,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 6, 0, 6),
+              child: Icon(
+                Icons.add,
+                color: FlutterFlowTheme.of(context).secondaryText,
+                size: 32,
+              ),
+            ),
+          ),
+          onTap: () {
+            this.showEmojiPicker();
+          }),
     );
   }
 }

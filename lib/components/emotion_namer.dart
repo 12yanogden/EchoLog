@@ -10,7 +10,7 @@ class EmotionNamer extends StatefulWidget {
       required this.setEmotionName});
   final String emoji;
   final Color color;
-  final void Function(dynamic)? setEmotionName;
+  final void Function(dynamic) setEmotionName;
   String? emotionName;
 
   @override
@@ -95,8 +95,8 @@ class _EmotionNamerState extends State<EmotionNamer> {
                             width: 300,
                             child: TextField(
                               onChanged: (text) {
-                                widget.emotionName = text;
-                                setState(() {});
+                                widget.setEmotionName(text);
+                                Navigator.pop(context);
                               },
                               decoration: InputDecoration(
                                 border: OutlineInputBorder(),

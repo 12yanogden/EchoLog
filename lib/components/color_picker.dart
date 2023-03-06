@@ -5,7 +5,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 class ColorPicker extends StatefulWidget {
   ColorPicker({super.key, required this.emoji, required this.setColor});
   final String emoji;
-  final void Function(dynamic)? setColor;
+  final void Function(dynamic) setColor;
   Color? color;
 
   @override
@@ -102,7 +102,10 @@ class _ColorPickerState extends State<ColorPicker> {
                         icon: checkMarkBlack,
                         constraints:
                             BoxConstraints.expand(width: 100, height: 100),
-                        onPressed: () => widget.setColor!(widget.color))),
+                        onPressed: (() {
+                          widget.setColor(widget.color);
+                          Navigator.pop(context);
+                        }))),
               Expanded(
                 //Color Palette --to be refactored to a drawer later
                 child: Padding(
