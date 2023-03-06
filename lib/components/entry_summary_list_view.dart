@@ -1,6 +1,5 @@
 import 'package:echo_log/backend/entry_service.dart';
 import 'package:echo_log/components/play_button.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../models/entry.dart';
@@ -18,7 +17,11 @@ class EntrySummaryListView extends StatelessWidget {
   final double itemWidth = 140;
 
   EntrySummaryListView(this.totalHeight) {
-    this.graphHeight = this.totalHeight - 2*wrapPadding - 2*dateStampPadding - dateStampSize - buttonSize;
+    this.graphHeight = this.totalHeight -
+        2 * wrapPadding -
+        2 * dateStampPadding -
+        dateStampSize -
+        buttonSize;
   }
 
   @override
@@ -33,39 +36,39 @@ class EntrySummaryListView extends StatelessWidget {
       itemCount: entries.length,
       controller: this._controller,
       itemBuilder: (BuildContext context, int i) {
-        return 
-          Container(
-              width: this.itemWidth,
-              height: this.totalHeight,
-              padding: EdgeInsets.all(this.wrapPadding),
-              decoration: BoxDecoration(
-                border: Border(
-                    left: BorderSide(
-                  color: Colors.grey,
-                )),
-              ),
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(this.dateStampPadding),
-                      height: this.dateStampSize, // standard height
-                      child: DateStamp(date: EntryService().entries[i].date),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(top: (this.graphHeight* 0.05), bottom: (this.graphHeight* 0.05)),
-                      height: this.graphHeight,
-                      child: EntryGraph(EntryService().entries[i].ratings),
-                    ),
-                    Container(
-                      width: this.buttonSize,
-                      height: this.buttonSize,
-                      child: PlayButton(
-                          recordingPath:
-                              EntryService().entries[i].recordingPath),
-                    ),
-                  ]));
+        return Container(
+            width: this.itemWidth,
+            height: this.totalHeight,
+            padding: EdgeInsets.all(this.wrapPadding),
+            decoration: BoxDecoration(
+              border: Border(
+                  left: BorderSide(
+                color: Colors.grey,
+              )),
+            ),
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(this.dateStampPadding),
+                    height: this.dateStampSize, // standard height
+                    child: DateStamp(date: EntryService().entries[i].date),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: (this.graphHeight * 0.05),
+                        bottom: (this.graphHeight * 0.05)),
+                    height: this.graphHeight,
+                    child: EntryGraph(EntryService().entries[i].ratings),
+                  ),
+                  Container(
+                    width: this.buttonSize,
+                    height: this.buttonSize,
+                    child: PlayButton(
+                        recordingPath: EntryService().entries[i].recordingPath),
+                  ),
+                ]));
       },
       separatorBuilder: (BuildContext context, int index) => const Divider(),
     );

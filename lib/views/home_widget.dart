@@ -5,11 +5,10 @@ import 'package:echo_log/models/emotion.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../backend/emotion_service.dart';
 import '../components/hamburger_menu_widget.dart';
-import '../components/play_button.dart';
 import '../components/top_bar_widget.dart';
 import '../components/emot_sliders.dart';
-import '../backend/emotion_service.dart';
 import '../backend/entry_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';

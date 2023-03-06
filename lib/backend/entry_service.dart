@@ -1,5 +1,6 @@
-import 'package:echo_log/models/emotion_rating.dart';
 import 'package:echo_log/models/entry.dart';
+
+import '../models/emotion_rating.dart';
 
 class EntryService {
   // Singleton Pattern----------------

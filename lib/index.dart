@@ -1,5 +1,5 @@
 // Export pages
-export 'home/home_widget.dart' show HomeWidget;
-export 'trends/trends_widget.dart' show TrendsWidget;
-export 'settings/settings_widget.dart' show SettingsWidget;
-export 'daily_summary/daily_summary_widget.dart' show DailySummaryWidget;
+export 'views/home_widget.dart' show HomeWidget;
+export 'views/trends_widget.dart' show TrendsWidget;
+export 'views/settings_widget.dart' show SettingsWidget;
+export 'views/daily_summary_widget.dart' show DailySummaryWidget;
