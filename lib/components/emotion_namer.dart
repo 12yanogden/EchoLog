@@ -110,8 +110,8 @@ class _EmotionNamerState extends State<EmotionNamer> {
                             padding: EdgeInsets.only(top: 16),
                             child: IconButton(
                                 icon: checkMarkBlack,
-                                onPressed: () => widget
-                                    .setEmotionName!(widget.emotionName))),
+                                onPressed: () =>
+                                    widget.setEmotionName(widget.emotionName))),
                     ],
                   ),
                 )
