@@ -64,14 +64,14 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       //   fullscreenDialog: true,
       //   builder: (context) => EmojiPickerWidget(setEmoji: setEmoji),
       // ));
-      Future.delayed(const Duration(microseconds: 20), () {
+      Future.delayed(const Duration(microseconds: 10), () {
         Popup(widget: EmojiPickerWidget(setEmoji: setEmoji)).show(context);
       });
       return Container();
     }
 
     showColorPicker() {
-      Future.delayed(const Duration(microseconds: 20), () {
+      Future.delayed(const Duration(microseconds: 10), () {
         Popup(widget: ColorPicker(emoji: this.emoji!, setColor: setColor))
             .show(context);
       });
@@ -79,7 +79,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     }
 
     showEmotionNamer() {
-      Future.delayed(const Duration(microseconds: 20), () {
+      Future.delayed(const Duration(microseconds: 10), () {
         Popup(
                 widget: EmotionNamer(
                     emoji: this.emoji!,
@@ -93,6 +93,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     uploadEmotion() {
       emotService.addEmotion(Emotion(this.emoji!, this.color!,
           this.emotionName!, emotService.genNextEmotionId()));
+      this.emoji = null;
+      this.color = null;
+      this.emotionName = null;
       return Container();
     }
 
