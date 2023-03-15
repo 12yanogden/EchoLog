@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:emoji_selector/emoji_selector.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
+import '../components/measure_child_size.dart';
 
 class EmojiPickerWidget extends StatefulWidget {
   EmojiPickerWidget({Key? key, required this.setEmoji}) : super(key: key);
@@ -20,6 +21,7 @@ class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
   EmojiData? emojiData;
   Image checkMarkBlack = Image.asset('assets/images/checkmark_off_black.png',
       width: 100, height: 100, fit: BoxFit.cover);
+  Size emojiPickerSize = Size.zero;
 
   @override
   Widget build(BuildContext context) {
@@ -92,16 +94,31 @@ class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
                   ],
                 ),
               ),
-              EmojiSelector(
-                padding: const EdgeInsets.all(20),
-                onSelected: (emoji) {
-                  setState(() {
-                    emojiData = emoji;
-                  });
-                },
-              ),
             ],
           ),
+          Column(children: [
+            Expanded(child: Container()),
+            Stack(
+              children: [
+                Container(color: FlutterFlowTheme.of(context).primaryBackground, height: emojiPickerSize.height, width: emojiPickerSize.width),
+                MeasureChildSize(
+                  onChange: (size) {
+                    setState(() {
+                      emojiPickerSize = size;
+                    });
+                  },
+                  child: EmojiSelector(
+                    padding: const EdgeInsets.all(20),
+                    onSelected: (emoji) {
+                      setState(() {
+                        emojiData = emoji;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ])
         ],
       ),
     );
