@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 import './theme_colors.dart';
 import '../models/emotion.dart';
 
-class EmotSliders extends StatefulWidget {
+class EmotionSliders extends StatefulWidget {
   late final List<double> emotionValues;
   late final List<String> emojis = [];
   late final List<String> emojiNames = [];
@@ -13,7 +13,7 @@ class EmotSliders extends StatefulWidget {
   late final List<Emotion> emotions;
   final bool isEnabled; // can the sliders move
 
-  EmotSliders(
+  EmotionSliders(
       {Key? key,
       required this.emotionValues,
       required this.emotions,
@@ -27,7 +27,7 @@ class EmotSliders extends StatefulWidget {
   }
 
   @override
-  _EmotSliderState createState() => _EmotSliderState(
+  _EmotionSlidersState createState() => _EmotionSlidersState(
       emotionValues, emojis, emojiNames, emojiColors, isEnabled);
 
   List<double> getEmotValuesCopy() {
@@ -40,7 +40,7 @@ class EmotSliders extends StatefulWidget {
   }
 }
 
-class _EmotSliderState extends State<EmotSliders> {
+class _EmotionSlidersState extends State<EmotionSliders> {
   double thumbRadious = 20.0;
   List<double> emotionValues;
   List<String> emojis;
@@ -48,7 +48,7 @@ class _EmotSliderState extends State<EmotSliders> {
   List<Color> emojiColors;
   bool isEnabled;
 
-  _EmotSliderState(this.emotionValues, this.emojis, this.emojiNames,
+  _EmotionSlidersState(this.emotionValues, this.emojis, this.emojiNames,
       this.emojiColors, this.isEnabled);
 
   @override
@@ -59,12 +59,12 @@ class _EmotSliderState extends State<EmotSliders> {
       mainAxisSize: MainAxisSize.min,
       children: [
         for (int i = 0; i < emojis.length; i++)
-          _EmotSlider(i, emojis[i], emojiNames[i], emojiColors[i])
+          _EmotionSlider(i, emojis[i], emojiNames[i], emojiColors[i])
       ],
     );
   }
 
-  Container _EmotSlider(
+  Container _EmotionSlider(
       int num, String emoji, String emotName, Color emotColor) {
     Color bgColor = ThemeColors.primaryBg;
 
@@ -75,7 +75,7 @@ class _EmotSliderState extends State<EmotSliders> {
           borderRadius: BorderRadius.all(Radius.circular(20)), color: bgColor),
       child: SliderTheme(
         data: SliderThemeData(
-            thumbShape: _SliderThumbEmot(thumbRadious, emoji, bgColor),
+            thumbShape: EmojiSliderThumb(thumbRadious, emoji, bgColor),
             trackShape: TriangleTrackShape(emotColor, bgColor),
             tickMarkShape: SliderTickMarkShape.noTickMark),
         child: Slider(
@@ -95,14 +95,14 @@ class _EmotSliderState extends State<EmotSliders> {
   }
 }
 
-class _SliderThumbEmot extends SliderComponentShape {
+class EmojiSliderThumb extends SliderComponentShape {
   final double thumbRadius;
   final String emoji;
   final Color bgColor; //Color.fromRGBO(0, 0, 0, 0); // clear
 
   late final TextPainter tp;
 
-  _SliderThumbEmot(this.thumbRadius, this.emoji, this.bgColor) {
+  EmojiSliderThumb(this.thumbRadius, this.emoji, this.bgColor) {
     TextSpan span = new TextSpan(
       style: new TextStyle(
         fontSize: thumbRadius * 1.3,

@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:echo_log/components/emotion_log.dart';
 import 'package:echo_log/components/theme_colors.dart';
 import 'package:echo_log/models/emotion.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -8,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../backend/emotion_service.dart';
 import '../components/hamburger_menu_widget.dart';
 import '../components/top_bar_widget.dart';
-import '../components/emot_sliders.dart';
+import '../components/emotion_sliders.dart';
 import '../backend/entry_service.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_timer.dart';
@@ -44,8 +45,8 @@ class _HomeWidgetState extends State<HomeWidget> {
   int timerMilliseconds = 0;
   String timerValue = StopWatchTimer.getDisplayTime(0, milliSecond: false);
   StopWatchTimer timerController = StopWatchTimer(mode: StopWatchMode.countUp);
-  late EmotSliders sliders;
-  int showForm = 0;
+  late EmotionSliders sliders;
+  int screenIndex = 0;
   List<double> _emotionValues = List.filled(5, 0.0);
 
   final _unfocusNode = FocusNode();
@@ -105,10 +106,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-    this.sliders = EmotSliders(
-      emotionValues: _emotionValues,
-      emotions: EmotionService().getCurEmotions(),
-    );
 
     return Scaffold(
       key: scaffoldKey,
@@ -121,10 +118,10 @@ class _HomeWidgetState extends State<HomeWidget> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
           child: IndexedStack(
-            index: showForm,
+            index: screenIndex,
             children: <Widget>[
               _MainRecordColumn(),
-              _EmotionLog(),
+              EmotionLog(),
             ],
           ),
         ),
@@ -246,11 +243,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                 // Change to emotion log form if there are current emotions
                                 if (EmotionService().getCurEmotions().length ==
                                     0) {
-                                  _CreatNewEntry();
+                                  _CreateNewEntry();
                                 } else {
-                                  showForm = 1;
+                                  screenIndex = 1;
                                 }
-                                // set slider values to 0 incase the user makes more then one entry in a row
+                                // set slider values to 0 in case the user makes more then one entry in a row
                                 for (int i = 0;
                                     i < _emotionValues.length;
                                     i++) {
@@ -309,47 +306,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     );
   }
 
-  Container _EmotionLog() {
-    double mainMargins = 10.0;
-    double buttonRadious = 100;
-
-    return Container(
-      margin: EdgeInsetsDirectional.all(mainMargins),
-      child: Column(children: [
-        Container(
-          padding: EdgeInsets.all(10.0),
-          child: Text(
-            'How did you feel?',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black),
-            textScaleFactor: 2,
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.all(mainMargins),
-          child: this.sliders, // The sliders
-        ),
-        Expanded(
-            child: Center(
-                child: Container(
-                    width: buttonRadious,
-                    height: buttonRadious,
-                    margin: EdgeInsets.only(top: mainMargins),
-                    child: IconButton(
-                      icon: checkMarkBlack,
-                      onPressed: () {
-                        setState(() {
-                          showForm = 0;
-                        });
-                        _CreatNewEntry();
-                      },
-                    )))),
-      ]),
-    );
-  }
-
-  _CreatNewEntry() {
+  _CreateNewEntry() {
     List<EmotionRating> ratings = [];
     List<Emotion> curEmots = EmotionService().getCurEmotions();
     for (int i = 0; i < curEmots.length; i++) {
