@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:core';
 
 import 'package:echo_log/components/theme_colors.dart';
 import 'package:echo_log/models/emotion.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 
 import '../backend/emotion_service.dart';
 import '../components/hamburger_menu_widget.dart';
@@ -52,6 +54,9 @@ class _HomeWidgetState extends State<HomeWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   String recordingPath = "";
+  
+  Duration duration = Duration.zero;
+  late StreamSubscription? playerSubscription;
 
   String getRecordingPath() {
     return this.recordingPath;
@@ -60,7 +65,6 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
-
     initRecorder();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -71,7 +75,15 @@ class _HomeWidgetState extends State<HomeWidget> {
     timerController.dispose();
     recorder.closeRecorder();
     player.closePlayer();
+    cancelPlayerSubscriptions();
     super.dispose();
+  }
+
+  void cancelPlayerSubscriptions() {
+    if (playerSubscription != null) {
+      playerSubscription!.cancel();
+      playerSubscription = null;
+    }
   }
 
   Future<void> initRecorder() async {
@@ -83,6 +95,14 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     await recorder.openRecorder();
     await player.openPlayer();
+
+    playerSubscription = player.onProgress!.listen((e) {
+      if (e != null) {
+        duration = e.duration;
+        setState(() {});
+      }
+      setState(() {});
+    });
   }
 
   Future<void> startRecording() async {
@@ -97,10 +117,46 @@ class _HomeWidgetState extends State<HomeWidget> {
   Future<void> stopRecording() async {
     try {
       this.recordingPath = (await recorder.stopRecorder())!;
+
+      timerController.onExecute
+          .add(StopWatchExecute.stop);
+      //todo: set total recording here maybe?
+      FFAppState().micState = 'NOT_RECORDING';
+      timerController.onExecute
+          .add(StopWatchExecute.reset);
+
+      //remove later
+      await _PlayRecording();
+
     } catch (e) {
       print(e);
     }
   }
+
+  void showEmotionLog() {
+    // Change to emotion log form if there are current emotions
+    if (EmotionService().getCurEmotions().length ==
+        0) {
+      _CreatNewEntry();
+    } else {
+      showForm = 1;
+    }
+    // set slider values to 0 incase the user makes more then one entry in a row
+    for (int i = 0;
+        i < _emotionValues.length;
+        i++) {
+      _emotionValues[i] = 0;
+    }
+  }
+
+  // Future<void> setSubscriptionDuration(double d) async {
+  //   duration = d;
+  //   setState(() {});
+  //   await player.setSubscriptionDuration(
+  //     Duration(milliseconds: d.floor()),
+  //   );
+  //   print("here");
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -237,25 +293,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               onTap: () async {
                                 // stop timer
                                 await stopRecording();
-                                timerController.onExecute
-                                    .add(StopWatchExecute.stop);
-                                FFAppState().micState = 'NOT_RECORDING';
-                                timerController.onExecute
-                                    .add(StopWatchExecute.reset);
-
-                                // Change to emotion log form if there are current emotions
-                                if (EmotionService().getCurEmotions().length ==
-                                    0) {
-                                  _CreatNewEntry();
-                                } else {
-                                  showForm = 1;
-                                }
-                                // set slider values to 0 incase the user makes more then one entry in a row
-                                for (int i = 0;
-                                    i < _emotionValues.length;
-                                    i++) {
-                                  _emotionValues[i] = 0;
-                                }
+                                //showEmotionLog();
                               },
                               child: Container(
                                 width: 36,
@@ -299,11 +337,31 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                       ),
                     ),
+                    
                   ],
                 ),
+                
               ],
             ),
           ),
+        ),
+        // Slider(
+        //     activeColor: FlutterFlowTheme.of(context).secondaryColor,
+        //     inactiveColor: FlutterFlowTheme.of(context).secondaryText,
+        //     thumbColor: FlutterFlowTheme.of(context).primaryText,
+        //     value: duration,
+        //     min: 0,
+        //     max: 2000,
+        //     divisions: 20,
+        //     label: duration.round().toString(),
+        //     onChanged: (double value) async {
+        //       await setSubscriptionDuration(value);
+        //     },
+        //   ),
+
+        ProgressBar(
+          progress: duration,
+          total:Duration.zero //set this value in above todo
         ),
       ],
     );
@@ -363,11 +421,15 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   // For testing
   _PlayRecording() async {
+    print("play recording");
     await player.startPlayer(
         fromURI: this.recordingPath,
         codec: Codec.aacMP4,
         whenFinished: () async {
           await player.stopPlayer();
+          setState(() {});
+          showEmotionLog();
+          //setState(() {});
         });
   }
 }

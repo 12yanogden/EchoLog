@@ -54,6 +54,7 @@ dependencies:
   flutter_sound: ^9.2.13
   emoji_selector: ^0.0.5
   fl_chart: ^0.61.0
+  audio_video_progress_bar: ^1.0.0
 
 dev_dependencies:
   flutter_launcher_icons: 0.9.3
