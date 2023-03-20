@@ -23,6 +23,7 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 
+
 class HomeWidget extends StatefulWidget {
   HomeWidget({Key? key}) : super(key: key);
   _HomeWidgetState homeWidgetState = _HomeWidgetState();
@@ -55,8 +56,10 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   String recordingPath = "";
   
-  Duration duration = Duration.zero;
-  late StreamSubscription? playerSubscription;
+  late StreamSubscription<PlaybackDisposition>? streamSub;
+  Duration recordingDuration = Duration.zero;
+  Duration playbackProgress = Duration.zero;
+
 
   String getRecordingPath() {
     return this.recordingPath;
@@ -75,15 +78,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     timerController.dispose();
     recorder.closeRecorder();
     player.closePlayer();
-    cancelPlayerSubscriptions();
     super.dispose();
-  }
-
-  void cancelPlayerSubscriptions() {
-    if (playerSubscription != null) {
-      playerSubscription!.cancel();
-      playerSubscription = null;
-    }
   }
 
   Future<void> initRecorder() async {
@@ -96,13 +91,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     await recorder.openRecorder();
     await player.openPlayer();
 
-    playerSubscription = player.onProgress!.listen((e) {
-      if (e != null) {
-        duration = e.duration;
-        setState(() {});
-      }
-      setState(() {});
-    });
+    await player.setSubscriptionDuration(Duration(milliseconds: 20));
   }
 
   Future<void> startRecording() async {
@@ -120,7 +109,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
       timerController.onExecute
           .add(StopWatchExecute.stop);
-      //todo: set total recording here maybe?
+      recordingDuration = Duration(milliseconds: timerController.rawTime.value);
       FFAppState().micState = 'NOT_RECORDING';
       timerController.onExecute
           .add(StopWatchExecute.reset);
@@ -148,15 +137,6 @@ class _HomeWidgetState extends State<HomeWidget> {
       _emotionValues[i] = 0;
     }
   }
-
-  // Future<void> setSubscriptionDuration(double d) async {
-  //   duration = d;
-  //   setState(() {});
-  //   await player.setSubscriptionDuration(
-  //     Duration(milliseconds: d.floor()),
-  //   );
-  //   print("here");
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -340,29 +320,20 @@ class _HomeWidgetState extends State<HomeWidget> {
                     
                   ],
                 ),
-                
               ],
             ),
           ),
         ),
-        // Slider(
-        //     activeColor: FlutterFlowTheme.of(context).secondaryColor,
-        //     inactiveColor: FlutterFlowTheme.of(context).secondaryText,
-        //     thumbColor: FlutterFlowTheme.of(context).primaryText,
-        //     value: duration,
-        //     min: 0,
-        //     max: 2000,
-        //     divisions: 20,
-        //     label: duration.round().toString(),
-        //     onChanged: (double value) async {
-        //       await setSubscriptionDuration(value);
-        //     },
-        //   ),
-
-        ProgressBar(
-          progress: duration,
-          total:Duration.zero //set this value in above todo
-        ),
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 30),
+          child: ProgressBar(
+            progress: playbackProgress,
+            total: recordingDuration,
+            thumbColor: FlutterFlowTheme.of(context).primaryColor,
+            progressBarColor: FlutterFlowTheme.of(context).secondaryColor,
+            baseBarColor: FlutterFlowTheme.of(context).primaryText,
+          ),
+        )
       ],
     );
   }
@@ -421,15 +392,25 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   // For testing
   _PlayRecording() async {
-    print("play recording");
+
+    playbackProgress = Duration.zero;
+
+    streamSub = player.onProgress!.listen((event) {
+      setState(() {
+        playbackProgress = event.position;
+      });
+    });
+
     await player.startPlayer(
-        fromURI: this.recordingPath,
-        codec: Codec.aacMP4,
-        whenFinished: () async {
-          await player.stopPlayer();
-          setState(() {});
-          showEmotionLog();
-          //setState(() {});
-        });
+      fromURI: this.recordingPath,
+      codec: Codec.aacMP4,
+      whenFinished: () {
+        showEmotionLog();
+        playbackProgress = Duration.zero;
+        recordingDuration = Duration.zero;
+        streamSub = null;
+        setState(() {});
+      }
+    );
   }
 }
