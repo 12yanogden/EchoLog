@@ -23,7 +23,6 @@ import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 
-
 class HomeWidget extends StatefulWidget {
   HomeWidget({Key? key}) : super(key: key);
   _HomeWidgetState homeWidgetState = _HomeWidgetState();
@@ -68,6 +67,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   void initState() {
     super.initState();
+
     initRecorder();
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -271,9 +271,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                             InkWell(
                               onTap: () async {
-                                // stop timer
                                 await stopRecording();
-                                //showEmotionLog();
                               },
                               child: Container(
                                 width: 36,
@@ -317,7 +315,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                             ),
                       ),
                     ),
-                    
                   ],
                 ),
               ],
