@@ -48,7 +48,8 @@ class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
                     size: 25,
                   ),
                   onPressed: () {
-                    Navigator.pop(context);
+                    widget.setEmoji(null);
+                    //Navigator.pop(context);
                   },
                 ),
               ),
@@ -86,7 +87,7 @@ class _EmojiPickerWidgetState extends State<EmojiPickerWidget> {
                                 onPressed: (() {
                                   widget.setEmoji(emojiData?.char);
                                   // widget.refresh();
-                                  Navigator.pop(context);
+                                  //Navigator.pop(context);
                                 })),
                           )
                         ],

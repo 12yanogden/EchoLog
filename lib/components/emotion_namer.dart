@@ -54,7 +54,8 @@ class _EmotionNamerState extends State<EmotionNamer> {
                       size: 25,
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      widget.setEmotionName(null);
+                      //Navigator.pop(context);
                     },
                   ),
                 ),
@@ -113,7 +114,7 @@ class _EmotionNamerState extends State<EmotionNamer> {
                                 icon: checkMarkBlack,
                                 onPressed: (() {
                                   widget.setEmotionName(widget.emotionName);
-                                  Navigator.pop(context);
+                                  //Navigator.pop(context);
                                 }))),
                     ],
                   ),

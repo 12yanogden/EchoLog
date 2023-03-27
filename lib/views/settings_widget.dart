@@ -23,6 +23,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   final EmotionService emotService = EmotionService();
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  int formIndex = 0;
+
+  dynamic emojiPicker = Container();
+  dynamic colorPicker = Container();
+  dynamic emotionNamer = Container();
+
   String? emoji;
   Color? color;
   String? emotionName;
@@ -37,71 +44,77 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     setState(() {});
   }
 
-  setEmoji(inputEmoji) {
+  reset() {
     setState(() {
-      this.emoji = inputEmoji;
+      this.emojiPicker = Container();
+      this.colorPicker = Container();
+      this.emotionNamer = Container();
+      this.emoji = null;
+      this.color = null;
+      this.emotionName = null;
+      this.formIndex = 0;
     });
+  }
+
+  setEmoji(inputEmoji) {
+    if (inputEmoji != null) {
+      setState(() {
+        this.emoji = inputEmoji;
+        this.colorPicker = ColorPicker(emoji: this.emoji!, setColor: setColor);
+        this.formIndex = 2;
+      });
+    } else {
+      reset();
+    }
   }
 
   setColor(inputColor) {
-    setState(() {
-      this.color = inputColor;
-    });
+    if (inputColor != null) {
+      setState(() {
+        this.color = inputColor;
+        this.emotionNamer = EmotionNamer(
+            emoji: this.emoji!,
+            color: this.color!,
+            setEmotionName: setEmotionName);
+        this.formIndex = 3;
+      });
+    } else {
+      reset();
+    }
   }
 
   setEmotionName(inputEmotionName) {
-    setState(() {
+    if (inputEmotionName != null) {
       this.emotionName = inputEmotionName;
+      this.formIndex = 0;
+      uploadEmotion(); // this calls setState
+    } else {
+      reset();
+    }
+  }
+
+  showEmojiPicker() {
+    // Future.delayed(const Duration(microseconds: 10), () {
+    //   Popup(widget: EmojiPickerWidget(setEmoji: setEmoji)).show(context);
+    // });
+    // return Container();
+    setState(() {
+      this.emojiPicker = EmojiPickerWidget(setEmoji: setEmoji);
+      this.formIndex = 1;
     });
+  }
+
+  uploadEmotion() {
+    setState(() {
+      emotService.addEmotion(Emotion(this.emoji!, this.color!,
+          this.emotionName!, emotService.genNextEmotionId()));
+    });
+    reset();
   }
 
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
-
-    showEmojiPicker() {
-      // Navigator.of(context).push(MaterialPageRoute(
-      //   fullscreenDialog: true,
-      //   builder: (context) => EmojiPickerWidget(setEmoji: setEmoji),
-      // ));
-      Future.delayed(const Duration(microseconds: 10), () {
-        Popup(widget: EmojiPickerWidget(setEmoji: setEmoji)).show(context);
-      });
-      return Container();
-    }
-
-    showColorPicker() {
-      Future.delayed(const Duration(microseconds: 10), () {
-        Popup(widget: ColorPicker(emoji: this.emoji!, setColor: setColor))
-            .show(context);
-      });
-      return Container();
-    }
-
-    showEmotionNamer() {
-      Future.delayed(const Duration(microseconds: 10), () {
-        Popup(
-                widget: EmotionNamer(
-                    emoji: this.emoji!,
-                    color: this.color!,
-                    setEmotionName: setEmotionName))
-            .show(context);
-      });
-      return Container();
-    }
-
-    uploadEmotion() {
-      Future.delayed(const Duration(microseconds: 10), () {
-        setState(() {
-          emotService.addEmotion(Emotion(this.emoji!, this.color!,
-              this.emotionName!, emotService.genNextEmotionId()));
-          this.emoji = null;
-          this.color = null;
-          this.emotionName = null;
-        });
-      });
-      return Container();
-    }
 
     return Scaffold(
       key: scaffoldKey,
@@ -112,81 +125,79 @@ class _SettingsWidgetState extends State<SettingsWidget> {
       ),
       body: SafeArea(
         child: GestureDetector(
-          onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              TopBarWidget(),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
-                    child: Text(
-                      (int emotionsCount, int emotionsMaxCount) {
-                        return "Your Emotions (" +
-                            emotionsCount.toString() +
-                            "/" +
-                            emotionsMaxCount.toString() +
-                            ")";
-                      }(
-                          this.emotService.getCurEmotions().length,
-                          this
-                              .emotService
-                              .getCurEmotionLimit()), //(FFAppState().emotions.length, FFAppState().emotionsMaxCount),
-                      style: FlutterFlowTheme.of(context).bodyText1.override(
-                            fontFamily: 'Poppins',
-                            fontSize: 18,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-              Builder(
-                builder: (context) {
-                  final emotions = emotService
-                      .getCurEmotions(); //FFAppState().emotions.toList().take(5).toList();
-                  return ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: emotions.length,
-                    itemBuilder: (context, emotionsIndex) {
-                      final emotionsItem = emotions[emotionsIndex];
-                      return EditEmotionListItemWidget(
-                        key: Key('EditEmotionListItem_${emotionsIndex}'),
-                        emotion: emotionsItem,
-                      );
-                    },
-                  );
-                },
-              ),
-              this.emoji == null &&
-                      this.color == null &&
-                      this.emotionName == null &&
-                      emotService.getCurEmotions().length <
-                          emotService.getCurEmotionLimit()
-                  ? AddEmotionButton(showEmojiPicker: showEmojiPicker)
-                  : Container(),
-              this.emoji != null &&
-                      this.color == null &&
-                      this.emotionName == null
-                  ? showColorPicker()
-                  : Container(),
-              this.emoji != null &&
-                      this.color != null &&
-                      this.emotionName == null
-                  ? showEmotionNamer()
-                  : Container(),
-              this.emoji != null &&
-                      this.color != null &&
-                      this.emotionName != null
-                  ? uploadEmotion()
-                  : Container()
-            ],
-          ),
-        ),
+            onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+            child: IndexedStack(
+              index: this.formIndex,
+              children: [
+                _MainEmotionsList(),
+                this.emojiPicker,
+                this.colorPicker,
+                this.emotionNamer,
+              ],
+            )),
       ),
+    );
+  }
+
+  Column _MainEmotionsList() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        TopBarWidget(),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(22, 0, 0, 0),
+              child: Text(
+                (int emotionsCount, int emotionsMaxCount) {
+                  return "Your Emotions (" +
+                      emotionsCount.toString() +
+                      "/" +
+                      emotionsMaxCount.toString() +
+                      ")";
+                }(this.emotService.getCurEmotions().length,
+                    this.emotService.getCurEmotionLimit()),
+                style: FlutterFlowTheme.of(context).bodyText1.override(
+                      fontFamily: 'Poppins',
+                      fontSize: 18,
+                    ),
+              ),
+            ),
+          ],
+        ),
+        Builder(
+          builder: (context) {
+            final emotions = emotService
+                .getCurEmotions(); //FFAppState().emotions.toList().take(5).toList();
+            return ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: emotions.length,
+              itemBuilder: (context, emotionsIndex) {
+                final emotionsItem = emotions[emotionsIndex];
+                return EditEmotionListItemWidget(
+                  key: Key('EditEmotionListItem_${emotionsIndex}'),
+                  emotion: emotionsItem,
+                );
+              },
+            );
+          },
+        ),
+        emotService.getCurEmotions().length < emotService.getCurEmotionLimit()
+            ? AddEmotionButton(showEmojiPicker: showEmojiPicker)
+            : Container(),
+        // this.emoji != null && this.color == null && this.emotionName == null
+        //     ? showColorPicker()
+        //     : Container(),
+        // this.emoji != null && this.color != null && this.emotionName == null
+        //     ? showEmotionNamer()
+        //     : Container(),
+        // this.emoji != null && this.color != null && this.emotionName != null
+        //     ? uploadEmotion()
+        //     : Container()
+      ],
     );
   }
 }

@@ -53,7 +53,8 @@ class _ColorPickerState extends State<ColorPicker> {
                       size: 25,
                     ),
                     onPressed: () {
-                      Navigator.pop(context);
+                      widget.setColor(null);
+                      //Navigator.pop(context);
                     }),
               ),
               Expanded(
@@ -104,7 +105,7 @@ class _ColorPickerState extends State<ColorPicker> {
                             BoxConstraints.expand(width: 100, height: 100),
                         onPressed: (() {
                           widget.setColor(widget.color);
-                          Navigator.pop(context);
+                          //Navigator.pop(context);
                         }))),
               Expanded(
                 //Color Palette --to be refactored to a drawer later
