@@ -91,7 +91,7 @@ class _HomeWidgetState extends State<HomeWidget> {
     await recorder.openRecorder();
     await player.openPlayer();
 
-    await player.setSubscriptionDuration(Duration(milliseconds: 20));
+    await player.setSubscriptionDuration(Duration(milliseconds: 100));
   }
 
   Future<void> startRecording() async {
@@ -105,10 +105,9 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   Future<void> stopRecording() async {
     try {
-      this.recordingPath = (await recorder.stopRecorder())!;
-
       timerController.onExecute
           .add(StopWatchExecute.stop);
+      this.recordingPath = (await recorder.stopRecorder())!;
       recordingDuration = Duration(milliseconds: timerController.rawTime.value);
       FFAppState().micState = 'NOT_RECORDING';
       timerController.onExecute
@@ -392,22 +391,33 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     playbackProgress = Duration.zero;
 
-    streamSub = player.onProgress!.listen((event) {
+    await player.startPlayer(
+      fromURI: this.recordingPath,
+      codec: Codec.aacMP4
+    );
+
+    streamSub = player.onProgress?.listen((event) {
+      
       setState(() {
-        playbackProgress = event.position;
+        if (event.position > playbackProgress) {
+          playbackProgress = event.position;
+        }
+        else if (event.position >= recordingDuration - Duration(milliseconds: 500)) {
+          player.stopPlayer();
+          _PlaybackCompleted();
+        }
       });
     });
 
-    await player.startPlayer(
-      fromURI: this.recordingPath,
-      codec: Codec.aacMP4,
-      whenFinished: () {
-        showEmotionLog();
-        playbackProgress = Duration.zero;
-        recordingDuration = Duration.zero;
-        streamSub = null;
-        setState(() {});
-      }
-    );
+  }
+
+
+  _PlaybackCompleted() {
+    setState(() {
+      playbackProgress = Duration.zero;
+      recordingDuration = Duration.zero;
+      streamSub = null;
+    });
+    showEmotionLog();
   }
 }
