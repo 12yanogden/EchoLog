@@ -16,14 +16,19 @@ public final class GeneratedPluginRegistrant {
   private static final String TAG = "GeneratedPluginRegistrant";
   public static void registerWith(@NonNull FlutterEngine flutterEngine) {
     try {
-      flutterEngine.getPlugins().add(new com.fintasys.emoji_picker_flutter.EmojiPickerFlutterPlugin());
+      flutterEngine.getPlugins().add(new com.ryanheise.audio_session.AudioSessionPlugin());
     } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin emoji_picker_flutter, com.fintasys.emoji_picker_flutter.EmojiPickerFlutterPlugin", e);
+      Log.e(TAG, "Error registering plugin audio_session, com.ryanheise.audio_session.AudioSessionPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new com.dooboolab.fluttersound.FlutterSound());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin flutter_sound, com.dooboolab.fluttersound.FlutterSound", e);
+    }
+    try {
+      flutterEngine.getPlugins().add(new com.ryanheise.just_audio.JustAudioPlugin());
+    } catch(Exception e) {
+      Log.e(TAG, "Error registering plugin just_audio, com.ryanheise.just_audio.JustAudioPlugin", e);
     }
     try {
       flutterEngine.getPlugins().add(new io.flutter.plugins.pathprovider.PathProviderPlugin());
@@ -34,21 +39,6 @@ public final class GeneratedPluginRegistrant {
       flutterEngine.getPlugins().add(new com.baseflow.permissionhandler.PermissionHandlerPlugin());
     } catch(Exception e) {
       Log.e(TAG, "Error registering plugin permission_handler_android, com.baseflow.permissionhandler.PermissionHandlerPlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin shared_preferences_android, io.flutter.plugins.sharedpreferences.SharedPreferencesPlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new com.tekartik.sqflite.SqflitePlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin sqflite, com.tekartik.sqflite.SqflitePlugin", e);
-    }
-    try {
-      flutterEngine.getPlugins().add(new io.flutter.plugins.urllauncher.UrlLauncherPlugin());
-    } catch(Exception e) {
-      Log.e(TAG, "Error registering plugin url_launcher_android, io.flutter.plugins.urllauncher.UrlLauncherPlugin", e);
     }
   }
 }

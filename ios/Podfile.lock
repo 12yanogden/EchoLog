@@ -1,72 +1,54 @@
 PODS:
-  - emoji_picker_flutter (0.0.1):
+  - audio_session (0.0.1):
     - Flutter
   - Flutter (1.0.0)
   - flutter_sound (9.2.13):
     - Flutter
     - flutter_sound_core (= 9.2.13)
   - flutter_sound_core (9.2.13)
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
+  - just_audio (0.0.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
   - permission_handler_apple (9.0.4):
     - Flutter
-  - shared_preferences_ios (0.0.1):
-    - Flutter
-  - sqflite (0.0.2):
-    - Flutter
-    - FMDB (>= 2.7.5)
-  - url_launcher_ios (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
-  - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
+  - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - Flutter (from `Flutter`)
   - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
-  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
-  - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
     - flutter_sound_core
-    - FMDB
 
 EXTERNAL SOURCES:
-  emoji_picker_flutter:
-    :path: ".symlinks/plugins/emoji_picker_flutter/ios"
+  audio_session:
+    :path: ".symlinks/plugins/audio_session/ios"
   Flutter:
     :path: Flutter
   flutter_sound:
     :path: ".symlinks/plugins/flutter_sound/ios"
+  just_audio:
+    :path: ".symlinks/plugins/just_audio/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
-  shared_preferences_ios:
-    :path: ".symlinks/plugins/shared_preferences_ios/ios"
-  sqflite:
-    :path: ".symlinks/plugins/sqflite/ios"
-  url_launcher_ios:
-    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  emoji_picker_flutter: df19dac03a2b39ac667dc8d1da939ef3a9e21347
+  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_sound: c60effa2a350fb977885f0db2fbc4c1ad5160900
   flutter_sound_core: 26c10e5832e76aaacfae252d8925232281c486ae
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
-  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
-  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  url_launcher_ios: fb12c43172927bb5cf75aeebd073f883801f1993
 
-PODFILE CHECKSUM: 37ff7df0f31567410c72a2c8a653ff62c83ef9cd
+PODFILE CHECKSUM: 7743f578c2632558cf2e24ad5949dd5e2974e224
 
 COCOAPODS: 1.11.3
