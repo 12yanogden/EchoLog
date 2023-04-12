@@ -52,7 +52,35 @@ class _EmotionListItemState extends State<EmotionListItem> {
                       ),
                     )))),
         const SizedBox(width: 16),
-        const Icon(Icons.close)
+        InkWell(
+            onTap: () => {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Delete"),
+                        content: Text(
+                            "Are you sure you want to delete ${widget.emotion.emoji}?\n\nThis will not remove historical data."),
+                        actions: [
+                          TextButton(
+                            child: const Text("CANCEL"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text("DELETE", style: alertText),
+                            onPressed: () {
+                              // Perform delete operation here
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                },
+            child: const Icon(Icons.close))
       ],
     );
   }

@@ -9,6 +9,7 @@ const Color offWhite = Color(0xFFF5F5F5);
 const Color offBlack = Color(0xFF282828);
 
 const Color textFieldStroke = Color(0xFFE5E5EA);
+const Color alertColor = Color(0xFFFF453A);
 
 const Color a1 = Color(0xFFFF946B);
 const Color a2 = Color(0xFFFF933A);
