@@ -1,7 +1,6 @@
 import 'package:echolog/components/hamburger_menu.dart';
-import 'package:echolog/components/top_bar.dart';
-import 'package:echolog/entries/components/animated_ellipses.dart';
-import 'package:echolog/entries/components/audio_recorder.dart';
+import 'package:echolog/emotion_ratings/modals/emotion_rating_form.dart';
+import 'package:echolog/entries/screens/entry_recording_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 
@@ -15,7 +14,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final soundPlayer = FlutterSoundPlayer();
   String? recordingPath;
-  bool isRecording = false;
+  int stackIndex = 0;
 
   @override
   void initState() {
@@ -27,15 +26,10 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  void setIsRecording(bool isRecording) {
-    setState(() {
-      this.isRecording = isRecording;
-    });
-  }
-
   void setRecordingPath(String recordingPath) {
     setState(() {
       this.recordingPath = recordingPath;
+      stackIndex = 1;
     });
   }
 
@@ -44,17 +38,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
         drawer: const HamburgerMenu(currentPageName: 'Home'),
         body: SafeArea(
-            child: Stack(alignment: Alignment.topCenter, children: [
-          const TopBar(),
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              AnimatedEllipses(isAnimating: isRecording),
-              AudioRecorder(
-                  setIsRecording: setIsRecording,
-                  setRecordingPath: setRecordingPath),
-            ],
-          )
+            child: IndexedStack(index: stackIndex, children: <Widget>[
+          EntryRecordingForm(setRecordingPath: setRecordingPath),
+          EmotionRatingForm()
         ])));
   }
 }

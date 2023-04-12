@@ -13,6 +13,10 @@ class Emotion {
     this.isActive = isActive;
   }
 
+  int getId() {
+    return id;
+  }
+
   String getEmoji() {
     return emoji;
   }
