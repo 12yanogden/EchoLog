@@ -1,4 +1,5 @@
 import 'package:echolog/emotions/models/emotion.dart';
+import 'package:echolog/style/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class EmotionService {
@@ -8,21 +9,18 @@ class EmotionService {
   EmotionService._internal();
 
   factory EmotionService() {
-    _instance.initializeActiveEmotions();
-
     return _instance;
   }
 
   List<Emotion> emotions = [
-    Emotion(0, "😡", Colors.red, "angry", true),
-    Emotion(1, "😭", Colors.blue, "sad", true),
-    Emotion(2, "🥱", Colors.purple, "tired", true),
-    Emotion(3, "😖", Colors.yellow, "stressed", true),
-    Emotion(4, "😄", Colors.green, "happy", true)
+    Emotion(0, "😉", a2, "Positive", true),
+    Emotion(1, "😅", b2, "Slightly Embarrassed", true),
+    Emotion(2, "😖", c2, "Super Embarrassed", true),
+    Emotion(3, "😒", d2, "Put off", true),
+    Emotion(4, "💀", e2, "Checked out", true)
   ];
-  List<Emotion> activeEmotions = [];
 
-  void initializeActiveEmotions() {
+  List<Emotion> getActiveEmotions() {
     List<Emotion> activeEmotions = [];
 
     for (Emotion emotion in emotions) {
@@ -31,10 +29,6 @@ class EmotionService {
       }
     }
 
-    this.activeEmotions = activeEmotions;
-  }
-
-  List<Emotion> getActiveEmotions() {
     return activeEmotions;
   }
 

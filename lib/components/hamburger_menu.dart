@@ -1,6 +1,6 @@
 import 'package:echolog/components/hamburger_menu_item.dart';
 import 'package:echolog/emotion_ratings/pages/trends.dart';
-import 'package:echolog/emotions/pages/settings.dart';
+import 'package:echolog/settings/pages/settings.dart';
 import 'package:echolog/entries/pages/home.dart';
 import 'package:echolog/style/custom_colors.dart';
 import 'package:flutter/material.dart';
