@@ -1,4 +1,3 @@
-import 'package:echolog/emotion_ratings/models/emotion_rating.dart';
 import 'package:echolog/entries/models/entry.dart';
 import 'package:echolog/factories/entry_factory.dart';
 

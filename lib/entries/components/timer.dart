@@ -7,10 +7,10 @@ class Timer extends StatefulWidget {
   const Timer({super.key, required this.stream});
 
   @override
-  _TimerState createState() => _TimerState();
+  TimerState createState() => TimerState();
 }
 
-class _TimerState extends State<Timer> {
+class TimerState extends State<Timer> {
   @override
   void initState() {
     super.initState();

@@ -81,8 +81,6 @@ class SliderTrack extends SliderTrackShape {
 
     // Since the triangle resembles the right triangle find the y co-ordinate (height with respect to the selection value, so the path of active and inactive segements can be drawn)
     const double trackHeightVariation = 20;
-    const double trackShiftAlongY =
-        0; // Shift the track so that the thumb will be placed in the center. // I removed this (it was added to every y value in the Path definitions)
     final double trackDistance = (trackRect.right - trackRect.left).abs();
     final double customTrackHeight =
         (trackRect.bottom - (trackRect.top - trackHeightVariation));

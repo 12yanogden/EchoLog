@@ -9,10 +9,10 @@ class AnimatedEllipses extends StatefulWidget {
   const AnimatedEllipses({super.key, required this.isAnimating});
 
   @override
-  _AnimatedEllipsesState createState() => _AnimatedEllipsesState();
+  AnimatedEllipsesState createState() => AnimatedEllipsesState();
 }
 
-class _AnimatedEllipsesState extends State<AnimatedEllipses>
+class AnimatedEllipsesState extends State<AnimatedEllipses>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
   final bool isAlternating = true;

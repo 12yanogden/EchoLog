@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 class EmotionListItem extends StatefulWidget {
   final Emotion emotion;
 
-  EmotionListItem({Key? key, required this.emotion}) : super(key: key);
+  const EmotionListItem({Key? key, required this.emotion}) : super(key: key);
 
   @override
-  _EmotionListItemState createState() => _EmotionListItemState();
+  EmotionListItemState createState() => EmotionListItemState();
 }
 
-class _EmotionListItemState extends State<EmotionListItem> {
+class EmotionListItemState extends State<EmotionListItem> {
   late final TextEditingController _textEditingController;
 
   @override

@@ -12,10 +12,10 @@ class HamburgerMenu extends StatefulWidget {
       : super(key: key);
 
   @override
-  _HamburgerMenuState createState() => _HamburgerMenuState();
+  HamburgerMenuState createState() => HamburgerMenuState();
 }
 
-class _HamburgerMenuState extends State<HamburgerMenu> {
+class HamburgerMenuState extends State<HamburgerMenu> {
   List<IconData> icons = [
     Icons.mic,
     Icons.bar_chart_rounded,

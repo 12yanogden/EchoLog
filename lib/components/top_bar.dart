@@ -5,10 +5,10 @@ class TopBar extends StatefulWidget {
   const TopBar({Key? key}) : super(key: key);
 
   @override
-  _TopBarState createState() => _TopBarState();
+  TopBarState createState() => TopBarState();
 }
 
-class _TopBarState extends State<TopBar> {
+class TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     return Row(

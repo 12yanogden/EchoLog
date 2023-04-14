@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class PlayButton extends StatefulWidget {
   final String recordingPath;
 
-  PlayButton({Key? key, required this.recordingPath}) : super(key: key);
+  const PlayButton({Key? key, required this.recordingPath}) : super(key: key);
 
   @override
   State<PlayButton> createState() => _PlayButtonState();

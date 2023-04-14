@@ -7,14 +7,15 @@ class EmotionList extends StatefulWidget {
   final List<Emotion> emotions;
   final int emotionsLimit;
 
-  EmotionList({Key? key, required this.emotions, required this.emotionsLimit})
+  const EmotionList(
+      {Key? key, required this.emotions, required this.emotionsLimit})
       : super(key: key);
 
   @override
-  _EmotionListState createState() => _EmotionListState();
+  EmotionListState createState() => EmotionListState();
 }
 
-class _EmotionListState extends State<EmotionList> {
+class EmotionListState extends State<EmotionList> {
   @override
   void initState() {
     super.initState();
