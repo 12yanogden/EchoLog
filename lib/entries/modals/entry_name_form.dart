@@ -3,11 +3,14 @@ import 'package:echolog/components/modal_top_bar.dart';
 import 'package:echolog/style/custom_colors.dart';
 import 'package:echolog/style/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class EntryNameForm extends StatefulWidget {
   final Function back;
+  final Function setEntryName;
 
-  const EntryNameForm({super.key, required this.back});
+  const EntryNameForm(
+      {super.key, required this.back, required this.setEntryName});
 
   @override
   EntryNameFormState createState() => EntryNameFormState();
@@ -15,7 +18,8 @@ class EntryNameForm extends StatefulWidget {
 
 class EntryNameFormState extends State<EntryNameForm> {
   late final TextEditingController _textEditingController;
-  final DateTime dateTime = DateTime.now();
+  final String dateTime =
+      DateFormat('M-d-y-h-m-a').format(DateTime.now()).toString();
 
   @override
   void initState() {
@@ -51,7 +55,10 @@ class EntryNameFormState extends State<EntryNameForm> {
           const SizedBox(
             height: 32,
           ),
-          const CheckmarkButton()
+          InkWell(
+              onTap: () =>
+                  widget.setEntryName(_textEditingController.value.text),
+              child: const CheckmarkButton())
         ]));
   }
 }

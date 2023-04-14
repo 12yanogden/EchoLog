@@ -1,10 +1,11 @@
 import 'package:echolog/emotions/models/emotion.dart';
-import 'package:echolog/style/custom_colors.dart';
-import 'package:flutter/material.dart';
+import 'package:echolog/factories/emotion_factory.dart';
 
 class EmotionService {
   // Singleton Pattern
   static final EmotionService _instance = EmotionService._internal();
+  final EmotionFactory emotionFactory = EmotionFactory();
+  List<Emotion> emotions = [];
 
   EmotionService._internal();
 
@@ -12,16 +13,14 @@ class EmotionService {
     return _instance;
   }
 
-  List<Emotion> emotions = [
-    Emotion(0, "😉", a2, "Positive", true),
-    Emotion(1, "😅", b2, "Slightly Embarrassed", true),
-    Emotion(2, "😖", c2, "Super Embarrassed", true),
-    Emotion(3, "😒", d2, "Put off", true),
-    Emotion(4, "💀", e2, "Checked out", true)
-  ];
+  void lazyLoadEmotions() {
+    if (emotions.isEmpty) emotionFactory.makeEmotions();
+  }
 
   List<Emotion> getActiveEmotions() {
     List<Emotion> activeEmotions = [];
+
+    lazyLoadEmotions();
 
     for (Emotion emotion in emotions) {
       if (emotion.isActivated()) {
