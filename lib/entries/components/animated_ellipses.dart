@@ -34,7 +34,6 @@ class _AnimatedEllipsesState extends State<AnimatedEllipses>
     super.dispose();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     if (widget.isAnimating) {

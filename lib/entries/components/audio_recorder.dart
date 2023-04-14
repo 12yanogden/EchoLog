@@ -23,10 +23,10 @@ class AudioRecorder extends StatefulWidget {
       required this.setRecordingPath});
 
   @override
-  _AudioRecorderState createState() => _AudioRecorderState();
+  AudioRecorderState createState() => AudioRecorderState();
 }
 
-class _AudioRecorderState extends State<AudioRecorder> {
+class AudioRecorderState extends State<AudioRecorder> {
   FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   MicState _micState = MicState.off;
 
@@ -107,6 +107,8 @@ class _AudioRecorderState extends State<AudioRecorder> {
       });
     }
 
+    widget.setIsRecording(false);
+
     widget.nextView();
   }
 
@@ -135,7 +137,6 @@ class _AudioRecorderState extends State<AudioRecorder> {
     }
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [

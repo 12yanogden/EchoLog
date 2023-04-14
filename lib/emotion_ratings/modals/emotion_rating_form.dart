@@ -9,8 +9,10 @@ import 'package:flutter/material.dart';
 
 class EmotionRatingForm extends StatefulWidget {
   final Function back;
+  final Function(List<EmotionRating>) setEmotionRatings;
 
-  const EmotionRatingForm({super.key, required this.back});
+  const EmotionRatingForm(
+      {super.key, required this.back, required this.setEmotionRatings});
 
   @override
   EmotionRatingFormState createState() => EmotionRatingFormState();
@@ -38,7 +40,16 @@ class EmotionRatingFormState extends State<EmotionRatingForm> {
     }
   }
 
-  // This widget is the root of your application.
+  setEmotionRating(EmotionRating emotionRating) {
+    for (int i = 0; i < emotionRatings.length; i++) {
+      if (emotionRatings[i].getEmotion() == emotionRating.getEmotion()) {
+        setState(() {
+          emotionRatings[i].setRating(emotionRating.getRating());
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,11 +60,15 @@ class EmotionRatingFormState extends State<EmotionRatingForm> {
           const SizedBox(
             height: 32,
           ),
-          EmotionSliders(emotionRatings: emotionRatings, isEnabled: true),
+          EmotionSliders(
+              emotionRatings: emotionRatings,
+              setEmotionRating: setEmotionRating),
           const SizedBox(
             height: 32,
           ),
-          const CheckmarkButton()
+          InkWell(
+              onTap: () => widget.setEmotionRatings(emotionRatings),
+              child: const CheckmarkButton())
         ]));
   }
 }

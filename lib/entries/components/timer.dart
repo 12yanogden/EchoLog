@@ -21,7 +21,6 @@ class _TimerState extends State<Timer> {
     super.dispose();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<dynamic>(

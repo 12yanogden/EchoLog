@@ -1,20 +1,21 @@
 import 'package:echolog/emotion_ratings/components/emotion_sliders/emotion_slider.dart';
 import 'package:echolog/emotion_ratings/models/emotion_rating.dart';
-import 'package:echolog/emotions/models/emotion.dart';
 import 'package:flutter/material.dart';
 
 class EmotionSliders extends StatefulWidget {
   final List<EmotionRating> emotionRatings;
-  bool isEnabled;
+  final Function(EmotionRating)? setEmotionRating;
 
-  EmotionSliders(
-      {super.key, required this.emotionRatings, required this.isEnabled});
+  const EmotionSliders(
+      {super.key,
+      required this.emotionRatings,
+      required this.setEmotionRating});
 
   @override
-  _EmotionSlidersState createState() => _EmotionSlidersState();
+  EmotionSlidersState createState() => EmotionSlidersState();
 }
 
-class _EmotionSlidersState extends State<EmotionSliders> {
+class EmotionSlidersState extends State<EmotionSliders> {
   @override
   void initState() {
     super.initState();
@@ -25,15 +26,6 @@ class _EmotionSlidersState extends State<EmotionSliders> {
     super.dispose();
   }
 
-  setEmotionRating(Emotion emotion, int rating) {
-    for (int i = 0; i < widget.emotionRatings.length; i++) {
-      if (widget.emotionRatings[i].getEmotion() == emotion) {
-        widget.emotionRatings[i].setRating(rating);
-      }
-    }
-  }
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -42,9 +34,8 @@ class _EmotionSlidersState extends State<EmotionSliders> {
           itemCount: widget.emotionRatings.length,
           itemBuilder: (BuildContext context, int index) {
             return EmotionSlider(
-                emotion: widget.emotionRatings[index].getEmotion(),
-                isEnabled: widget.isEnabled,
-                setEmotionRating: setEmotionRating);
+                emotionRating: widget.emotionRatings[index],
+                setEmotionRating: widget.setEmotionRating);
           },
           separatorBuilder: (context, index) => const SizedBox(
                 height: 8,

@@ -1,28 +1,29 @@
 import 'package:echolog/emotion_ratings/components/emotion_sliders/slider_thumb.dart';
 import 'package:echolog/emotion_ratings/components/emotion_sliders/slider_track.dart';
+import 'package:echolog/emotion_ratings/models/emotion_rating.dart';
 import 'package:echolog/emotions/models/emotion.dart';
 import 'package:echolog/style/custom_colors.dart';
 import 'package:flutter/material.dart';
 
 class EmotionSlider extends StatefulWidget {
-  final Emotion emotion;
-  final bool isEnabled;
-  final Function setEmotionRating;
+  final EmotionRating emotionRating;
+  final Function(EmotionRating)? setEmotionRating;
 
   const EmotionSlider(
-      {super.key,
-      required this.emotion,
-      required this.isEnabled,
-      required this.setEmotionRating});
+      {super.key, required this.emotionRating, this.setEmotionRating});
 
   @override
   EmotionSliderState createState() => EmotionSliderState();
 }
 
 class EmotionSliderState extends State<EmotionSlider> {
+  late final Emotion emotion;
+
   @override
   void initState() {
     super.initState();
+
+    emotion = widget.emotionRating.getEmotion();
   }
 
   @override
@@ -30,7 +31,6 @@ class EmotionSliderState extends State<EmotionSlider> {
     super.dispose();
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,18 +40,20 @@ class EmotionSliderState extends State<EmotionSlider> {
           borderRadius: BorderRadius.all(Radius.circular(20)), color: offWhite),
       child: SliderTheme(
         data: SliderThemeData(
-            thumbShape: SliderThumb(widget.emotion.getEmoji()),
-            trackShape: SliderTrack(widget.emotion.getColor()),
+            thumbShape: SliderThumb(emotion.getEmoji()),
+            trackShape: SliderTrack(emotion.getColor()),
             tickMarkShape: SliderTickMarkShape.noTickMark),
         child: Slider(
             value: 0,
             max: 5,
             divisions: 5,
-            label: widget.emotion.getName(),
+            label: emotion.getName(),
             onChanged: (double value) {
-              if (widget.isEnabled) {
+              if (widget.setEmotionRating != null) {
+                widget.emotionRating.setRating(value.toInt());
+
                 setState(() {
-                  widget.setEmotionRating(widget.emotion, value.toInt());
+                  widget.setEmotionRating!(widget.emotionRating);
                 });
               }
             }),
