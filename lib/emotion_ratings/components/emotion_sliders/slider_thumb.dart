@@ -10,7 +10,7 @@ class SliderThumb extends SliderComponentShape {
     textPainter = TextPainter(
         text: TextSpan(
           style: TextStyle(
-            fontSize: thumbRadius * 1.3,
+            fontSize: thumbRadius * 2,
             fontWeight: FontWeight.w700,
             color: Colors.black, //Text Color of Value on Thumb
           ),
@@ -51,7 +51,7 @@ class SliderThumb extends SliderComponentShape {
     Offset textCenter = Offset(center.dx - (textPainter.width / 2),
         center.dy - (textPainter.height / 2));
 
-    canvas.drawCircle(center, thumbRadius, paint);
+    canvas.drawCircle(center, thumbRadius + 2, paint);
     textPainter.paint(canvas, textCenter);
   }
 }

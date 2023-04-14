@@ -23,7 +23,7 @@ TextStyle? large = const TextStyle(
 );
 
 TextStyle? xl = const TextStyle(
-  fontSize: 32,
+  fontSize: 28,
   color: offBlack,
   fontFamily: 'Comfortaa',
   fontWeight: FontWeight.normal,

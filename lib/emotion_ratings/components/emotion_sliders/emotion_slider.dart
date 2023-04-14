@@ -7,19 +7,19 @@ import 'package:flutter/material.dart';
 class EmotionSlider extends StatefulWidget {
   final Emotion emotion;
   final bool isEnabled;
-  Function setEmotionRating;
+  final Function setEmotionRating;
 
-  EmotionSlider(
+  const EmotionSlider(
       {super.key,
       required this.emotion,
       required this.isEnabled,
       required this.setEmotionRating});
 
   @override
-  _EmotionSliderState createState() => _EmotionSliderState();
+  EmotionSliderState createState() => EmotionSliderState();
 }
 
-class _EmotionSliderState extends State<EmotionSlider> {
+class EmotionSliderState extends State<EmotionSlider> {
   @override
   void initState() {
     super.initState();
@@ -51,7 +51,7 @@ class _EmotionSliderState extends State<EmotionSlider> {
             onChanged: (double value) {
               if (widget.isEnabled) {
                 setState(() {
-                  widget.setEmotionRating(widget.emotion.id, value);
+                  widget.setEmotionRating(widget.emotion, value.toInt());
                 });
               }
             }),

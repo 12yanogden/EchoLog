@@ -1,9 +1,7 @@
 import 'package:echolog/components/hamburger_menu.dart';
 import 'package:echolog/emotion_ratings/modals/emotion_rating_form.dart';
-import 'package:echolog/entries/enums/mic_state.dart';
 import 'package:echolog/entries/screens/entry_recording_form.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -40,6 +38,12 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void prevView() {
+    setState(() {
+      stackIndex--;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +54,7 @@ class _HomeState extends State<Home> {
               nextView: nextView,
               needRecordingPath: needRecordingPath,
               setRecordingPath: setRecordingPath),
-          EmotionRatingForm()
+          EmotionRatingForm(back: prevView)
         ])));
   }
 }

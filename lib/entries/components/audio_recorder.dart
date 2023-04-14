@@ -98,6 +98,18 @@ class _AudioRecorderState extends State<AudioRecorder> {
     }
   }
 
+  Future stop() async {
+    if (_micState == MicState.recording) {
+      await _recorder.pauseRecorder();
+
+      setState(() {
+        _micState = MicState.paused;
+      });
+    }
+
+    widget.nextView();
+  }
+
   Future reset() async {
     if (_micState == MicState.recording || _micState == MicState.paused) {
       String? recordingPath = await _recorder.stopRecorder();
@@ -142,7 +154,7 @@ class _AudioRecorderState extends State<AudioRecorder> {
                           child: const Icon(Icons.mic_outlined,
                               color: offBlack, size: 64.0)),
                   InkWell(
-                      onTap: () async => widget.nextView(),
+                      onTap: () async => await stop(),
                       child: const Icon(Icons.stop_outlined,
                           color: offBlack, size: 64.0))
                 ])

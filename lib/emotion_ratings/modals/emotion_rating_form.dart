@@ -1,4 +1,5 @@
-import 'package:echolog/emotion_ratings/components/emotion_sliders/emotion_slider.dart';
+import 'package:echolog/components/checkmark_button.dart';
+import 'package:echolog/components/modal_top_bar.dart';
 import 'package:echolog/emotion_ratings/components/emotion_sliders/emotion_sliders.dart';
 import 'package:echolog/emotion_ratings/models/emotion_rating.dart';
 import 'package:echolog/emotions/models/emotion.dart';
@@ -7,28 +8,28 @@ import 'package:echolog/style/custom_text.dart';
 import 'package:flutter/material.dart';
 
 class EmotionRatingForm extends StatefulWidget {
-  EmotionRatingForm({super.key});
+  final Function back;
+
+  const EmotionRatingForm({super.key, required this.back});
 
   @override
-  _EmotionRatingFormState createState() => _EmotionRatingFormState();
+  EmotionRatingFormState createState() => EmotionRatingFormState();
 }
 
-class _EmotionRatingFormState extends State<EmotionRatingForm> {
+class EmotionRatingFormState extends State<EmotionRatingForm> {
   List<Emotion> emotions = EmotionService().getActiveEmotions();
   List<EmotionRating> emotionRatings = [];
 
   @override
   void initState() {
     super.initState();
+
+    initEmotionRatings();
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  _EmotionRatingFormState() {
-    initEmotionRatings();
   }
 
   initEmotionRatings() {
@@ -40,12 +41,19 @@ class _EmotionRatingFormState extends State<EmotionRatingForm> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Text("How did you feel?", style: xl),
-      const SizedBox(
-        height: 18,
-      ),
-      EmotionSliders(emotionRatings: emotionRatings, isEnabled: true)
-    ]);
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 64),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          ModalTopBar(back: widget.back),
+          Text("How did you feel?", style: xl),
+          const SizedBox(
+            height: 32,
+          ),
+          EmotionSliders(emotionRatings: emotionRatings, isEnabled: true),
+          const SizedBox(
+            height: 32,
+          ),
+          const CheckmarkButton()
+        ]));
   }
 }

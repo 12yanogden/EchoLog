@@ -1,7 +1,6 @@
 import 'package:echolog/components/top_bar.dart';
 import 'package:echolog/entries/components/animated_ellipses.dart';
 import 'package:echolog/entries/components/audio_recorder.dart';
-import 'package:echolog/entries/enums/mic_state.dart';
 import 'package:flutter/material.dart';
 
 class EntryRecordingForm extends StatefulWidget {

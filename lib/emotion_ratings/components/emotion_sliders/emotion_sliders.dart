@@ -37,19 +37,18 @@ class _EmotionSlidersState extends State<EmotionSliders> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      return Expanded(
-          child: ListView.separated(
-              shrinkWrap: true,
-              itemCount: widget.emotionRatings.length,
-              itemBuilder: (BuildContext context, int index) {
-                return EmotionSlider(
-                    emotion: widget.emotionRatings[index].getEmotion(),
-                    isEnabled: widget.isEnabled,
-                    setEmotionRating: setEmotionRating);
-              },
-              separatorBuilder: (context, index) => const SizedBox(
-                    height: 18,
-                  )));
+      return ListView.separated(
+          shrinkWrap: true,
+          itemCount: widget.emotionRatings.length,
+          itemBuilder: (BuildContext context, int index) {
+            return EmotionSlider(
+                emotion: widget.emotionRatings[index].getEmotion(),
+                isEnabled: widget.isEnabled,
+                setEmotionRating: setEmotionRating);
+          },
+          separatorBuilder: (context, index) => const SizedBox(
+                height: 8,
+              ));
     });
   }
 }
