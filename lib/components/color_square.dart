@@ -13,10 +13,14 @@ class ColorSquare extends StatelessWidget {
         height: 32,
         width: 32,
         color: Colors.transparent,
-        child: Container(
-            decoration: BoxDecoration(
-                color: this.color,
-                borderRadius: BorderRadius.all(Radius.circular(6.0))))
+        child: Center(
+          child: Material(
+            child: Container(
+                decoration: BoxDecoration(
+                    color: this.color,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0)))),
+          ),
+        )
         // decoration: BoxDecoration(
         //     borderRadius: BorderRadius.circular(6), color: this.color)
         );
