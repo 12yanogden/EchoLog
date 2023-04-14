@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:echolog/entries/components/timer.dart';
 import 'package:echolog/style/custom_colors.dart';
 import 'package:echolog/style/custom_icons.dart';
@@ -9,11 +11,15 @@ enum MicState { off, ready, recording, paused }
 
 class AudioRecorder extends StatefulWidget {
   final void Function(bool) setIsRecording;
+  final void Function() nextView;
+  final bool needRecordingPath;
   final void Function(String) setRecordingPath;
 
-  AudioRecorder(
+  const AudioRecorder(
       {super.key,
       required this.setIsRecording,
+      required this.nextView,
+      required this.needRecordingPath,
       required this.setRecordingPath});
 
   @override
@@ -21,7 +27,7 @@ class AudioRecorder extends StatefulWidget {
 }
 
 class _AudioRecorderState extends State<AudioRecorder> {
-  final _recorder = FlutterSoundRecorder();
+  FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   MicState _micState = MicState.off;
 
   @override
@@ -47,7 +53,9 @@ class _AudioRecorderState extends State<AudioRecorder> {
 
     await _recorder.openRecorder();
 
-    _micState = MicState.ready;
+    setState(() {
+      _micState = MicState.ready;
+    });
 
     _recorder.setSubscriptionDuration(
       const Duration(milliseconds: 500),
@@ -58,11 +66,11 @@ class _AudioRecorderState extends State<AudioRecorder> {
     if (_micState == MicState.ready || _micState == MicState.paused) {
       await _recorder.startRecorder(toFile: "audio");
 
-      widget.setIsRecording(true);
-
       setState(() {
         _micState = MicState.recording;
       });
+
+      widget.setIsRecording(true);
     }
   }
 
@@ -70,11 +78,11 @@ class _AudioRecorderState extends State<AudioRecorder> {
     if (_micState == MicState.recording) {
       await _recorder.pauseRecorder();
 
-      widget.setIsRecording(false);
-
       setState(() {
         _micState = MicState.paused;
       });
+
+      widget.setIsRecording(false);
     }
   }
 
@@ -82,19 +90,17 @@ class _AudioRecorderState extends State<AudioRecorder> {
     if (_micState == MicState.paused) {
       await _recorder.resumeRecorder();
 
-      widget.setIsRecording(true);
-
       setState(() {
         _micState = MicState.recording;
       });
+
+      widget.setIsRecording(true);
     }
   }
 
-  Future stop() async {
+  Future reset() async {
     if (_micState == MicState.recording || _micState == MicState.paused) {
       String? recordingPath = await _recorder.stopRecorder();
-
-      widget.setIsRecording(false);
 
       if (recordingPath != null) {
         widget.setRecordingPath(recordingPath);
@@ -102,7 +108,18 @@ class _AudioRecorderState extends State<AudioRecorder> {
 
       setState(() {
         _micState = MicState.ready;
+        _recorder = FlutterSoundRecorder();
+        initRecorder();
       });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant AudioRecorder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.needRecordingPath) {
+      reset();
     }
   }
 
@@ -110,40 +127,29 @@ class _AudioRecorderState extends State<AudioRecorder> {
   @override
   Widget build(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      InkWell(
-          onTap: () async {
-            if (_recorder.isRecording) {
-              await stop();
-            } else {
-              await record();
-            }
-          },
-          child: _micState == MicState.recording || _micState == MicState.paused
-              ? Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                      _micState == MicState.recording
-                          ? InkWell(
-                              onTap: () async {
-                                await pause();
-                              },
-                              child: const Icon(Icons.pause_outlined,
-                                  color: offBlack, size: 64.0))
-                          : InkWell(
-                              onTap: () async {
-                                await resume();
-                              },
-                              child: const Icon(Icons.mic_outlined,
-                                  color: offBlack, size: 64.0)),
-                      InkWell(
-                          onTap: () async {
-                            await stop();
-                          },
-                          child: const Icon(Icons.stop_outlined,
+      _micState == MicState.recording || _micState == MicState.paused
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                  _micState == MicState.recording
+                      ? InkWell(
+                          onTap: () async => await pause(),
+                          child: const Icon(Icons.pause_outlined,
                               color: offBlack, size: 64.0))
-                    ])
-              : const Icon(CustomIcons.big_mic, color: offBlack, size: 96.0)),
+                      : InkWell(
+                          onTap: () async => await resume(),
+                          child: const Icon(Icons.mic_outlined,
+                              color: offBlack, size: 64.0)),
+                  InkWell(
+                      onTap: () async => widget.nextView(),
+                      child: const Icon(Icons.stop_outlined,
+                          color: offBlack, size: 64.0))
+                ])
+          : InkWell(
+              onTap: () async => record(),
+              child:
+                  const Icon(CustomIcons.big_mic, color: offBlack, size: 96.0)),
       const SizedBox(height: 16),
       Timer(stream: _recorder.onProgress)
     ]);

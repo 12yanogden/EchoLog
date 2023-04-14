@@ -1,12 +1,19 @@
 import 'package:echolog/components/top_bar.dart';
 import 'package:echolog/entries/components/animated_ellipses.dart';
 import 'package:echolog/entries/components/audio_recorder.dart';
+import 'package:echolog/entries/enums/mic_state.dart';
 import 'package:flutter/material.dart';
 
 class EntryRecordingForm extends StatefulWidget {
+  final void Function() nextView;
+  final bool needRecordingPath;
   final void Function(String) setRecordingPath;
 
-  const EntryRecordingForm({super.key, required this.setRecordingPath});
+  const EntryRecordingForm(
+      {super.key,
+      required this.nextView,
+      required this.needRecordingPath,
+      required this.setRecordingPath});
 
   @override
   State<EntryRecordingForm> createState() => _EntryRecordingFormState();
@@ -41,6 +48,8 @@ class _EntryRecordingFormState extends State<EntryRecordingForm> {
           AnimatedEllipses(isAnimating: isRecording),
           AudioRecorder(
               setIsRecording: setIsRecording,
+              nextView: widget.nextView,
+              needRecordingPath: widget.needRecordingPath,
               setRecordingPath: widget.setRecordingPath),
         ],
       )
