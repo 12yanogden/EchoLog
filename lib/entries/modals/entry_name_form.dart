@@ -25,7 +25,7 @@ class EntryNameFormState extends State<EntryNameForm> {
   void initState() {
     super.initState();
 
-    _textEditingController = TextEditingController(text: dateTime.toString());
+    _textEditingController = TextEditingController(text: dateTime);
   }
 
   @override

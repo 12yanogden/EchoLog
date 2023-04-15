@@ -112,33 +112,50 @@ class AudioRecorderState extends State<AudioRecorder> {
     widget.nextView();
   }
 
+  Future resetRecorder() async {
+    setState(() {
+      _recorder = FlutterSoundRecorder();
+      _micState = MicState.off;
+      print("HERE");
+      print("HERE");
+      print("HERE");
+      print("HERE");
+      print("HERE");
+      print("HERE");
+      print("HERE");
+      print("HERE");
+      print("HERE");
+    });
+
+    await _recorder.openRecorder();
+
+    setState(() {
+      _micState = MicState.ready;
+    });
+
+    _recorder.setSubscriptionDuration(
+      const Duration(milliseconds: 500),
+    );
+  }
+
   Future reset() async {
     if (_micState == MicState.recording || _micState == MicState.paused) {
       String? recordingPath = await _recorder.stopRecorder();
 
+      await resetRecorder();
+
       if (recordingPath != null) {
         widget.setRecordingPath(recordingPath);
       }
-
-      setState(() {
-        _micState = MicState.ready;
-        _recorder = FlutterSoundRecorder();
-        initRecorder();
-      });
-    }
-  }
-
-  @override
-  void didUpdateWidget(covariant AudioRecorder oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.needRecordingPath) {
-      reset();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (widget.needRecordingPath) {
+      reset();
+    }
+
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       _micState == MicState.recording || _micState == MicState.paused
           ? Row(

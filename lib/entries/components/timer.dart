@@ -23,11 +23,14 @@ class TimerState extends State<Timer> {
 
   @override
   Widget build(BuildContext context) {
+    print("Timer::build()");
     return StreamBuilder<dynamic>(
         stream: widget.stream,
         builder: (context, snapshot) {
           final duration =
               snapshot.hasData ? snapshot.data!.duration : Duration.zero;
+
+          print(duration);
 
           String twoDigits(int n) => n.toString().padLeft(2, '0');
           final twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60));

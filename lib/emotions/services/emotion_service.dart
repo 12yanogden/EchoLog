@@ -14,7 +14,7 @@ class EmotionService {
   }
 
   void lazyLoadEmotions() {
-    if (emotions.isEmpty) emotionFactory.makeEmotions();
+    if (emotions.isEmpty) emotions = emotionFactory.makeEmotions();
   }
 
   List<Emotion> getActiveEmotions() {
