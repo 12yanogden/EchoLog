@@ -89,13 +89,7 @@ class AnimatedEllipsesState extends State<AnimatedEllipses>
       AnimatedEllipse(
           animationController: animationController,
           startAngle: 330,
-          rotatesClockwise: true),
-      Container(
-          width: 320,
-          height: 320,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.elliptical(320, 320)),
-              color: offWhite))
+          rotatesClockwise: true)
     ]);
   }
 }

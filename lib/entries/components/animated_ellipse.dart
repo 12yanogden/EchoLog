@@ -7,8 +7,8 @@ class AnimatedEllipse extends StatelessWidget {
   final int startAngle;
   final bool rotatesClockwise;
   static const double width = 320;
-  static const double height = 376;
-  static const double thickness = 3.0;
+  static const double height = 400;
+  static const double thickness = 5.0;
 
   const AnimatedEllipse(
       {super.key,
@@ -16,7 +16,6 @@ class AnimatedEllipse extends StatelessWidget {
       required this.startAngle,
       required this.rotatesClockwise});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return RotationTransition(
@@ -28,10 +27,10 @@ class AnimatedEllipse extends StatelessWidget {
           child: Container(
             width: width,
             height: height,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
                 borderRadius:
-                    BorderRadius.all(Radius.elliptical(width, height)),
-                color: primaryColor),
+                    const BorderRadius.all(Radius.elliptical(width, height)),
+                border: Border.all(color: primaryColor, width: thickness)),
           )),
     );
   }
