@@ -7,6 +7,8 @@ const Color quaternaryColor = Color(0xFFF5D7AB);
 const Color darkPrimary = Color(0xFFCF919D);
 const Color offWhite = Color(0xFFF5F5F5);
 const Color offBlack = Color(0xFF282828);
+const Color lightGrey = Color(0xFFEEEEF3);
+const Color darkGrey = Color(0xFFA5A6A9);
 
 const Color textFieldStroke = Color(0xFFE5E5EA);
 const Color alertColor = Color(0xFFFF453A);

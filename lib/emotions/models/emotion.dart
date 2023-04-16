@@ -32,4 +32,8 @@ class Emotion {
   bool isActivated() {
     return isActive;
   }
+
+  void deactivate() {
+    isActive = false;
+  }
 }

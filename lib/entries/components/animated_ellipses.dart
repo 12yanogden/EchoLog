@@ -14,14 +14,14 @@ class AnimatedEllipses extends StatefulWidget {
 
 class AnimatedEllipsesState extends State<AnimatedEllipses>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
+  late final AnimationController animationController;
   final bool isAlternating = true;
 
   @override
   void initState() {
     super.initState();
 
-    _animationController = AnimationController(
+    animationController = AnimationController(
       duration: const Duration(seconds: 30),
       vsync: this,
     );
@@ -29,7 +29,7 @@ class AnimatedEllipsesState extends State<AnimatedEllipses>
 
   @override
   void dispose() {
-    _animationController.dispose();
+    animationController.dispose();
 
     super.dispose();
   }
@@ -37,57 +37,57 @@ class AnimatedEllipsesState extends State<AnimatedEllipses>
   @override
   Widget build(BuildContext context) {
     if (widget.isAnimating) {
-      _animationController.repeat();
+      animationController.repeat();
     } else {
-      _animationController.stop();
+      animationController.stop();
     }
     return Stack(alignment: Alignment.center, children: [
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 0,
           rotatesClockwise: true),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 60,
           rotatesClockwise: !isAlternating),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 120,
           rotatesClockwise: true),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 180,
           rotatesClockwise: !isAlternating),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 240,
           rotatesClockwise: !isAlternating),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 300,
           rotatesClockwise: true),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 180,
           rotatesClockwise: !isAlternating),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 210,
           rotatesClockwise: true),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 240,
           rotatesClockwise: !isAlternating),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 270,
           rotatesClockwise: true),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 300,
           rotatesClockwise: !isAlternating),
       AnimatedEllipse(
-          animationController: _animationController,
+          animationController: animationController,
           startAngle: 330,
           rotatesClockwise: true),
       Container(

@@ -17,6 +17,10 @@ class EmotionService {
     if (emotions.isEmpty) emotions = emotionFactory.makeEmotions();
   }
 
+  void deactivateEmotion(Emotion targetEmotion) {
+    emotions.where((emotion) => emotion == targetEmotion).first.deactivate();
+  }
+
   List<Emotion> getActiveEmotions() {
     List<Emotion> activeEmotions = [];
 

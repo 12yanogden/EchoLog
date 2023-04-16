@@ -6,8 +6,11 @@ import 'package:flutter/material.dart';
 
 class EmotionListItem extends StatefulWidget {
   final Emotion emotion;
+  final Function(Emotion) removeEmotion;
 
-  const EmotionListItem({Key? key, required this.emotion}) : super(key: key);
+  const EmotionListItem(
+      {Key? key, required this.emotion, required this.removeEmotion})
+      : super(key: key);
 
   @override
   EmotionListItemState createState() => EmotionListItemState();
@@ -71,7 +74,7 @@ class EmotionListItemState extends State<EmotionListItem> {
                           TextButton(
                             child: const Text("DELETE", style: alertText),
                             onPressed: () {
-                              // Perform delete operation here
+                              widget.removeEmotion(widget.emotion);
                               Navigator.of(context).pop();
                             },
                           ),

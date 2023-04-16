@@ -41,6 +41,8 @@ dependencies:
   google_fonts: ^4.0.3
   intl: ^0.18.0
   faker: ^2.1.0
+  emoji_selector: ^0.0.5
+  measure_size: ^4.0.0
 
 dev_dependencies:
   flutter_test:
